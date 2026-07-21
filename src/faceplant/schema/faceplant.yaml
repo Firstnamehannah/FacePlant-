@@ -1,0 +1,1463 @@
+id: https://w3id.org/your-org/faceplant
+name: faceplant
+title: "FacePlant: a plant phenotypic data model"
+description: >
+  A LinkML data model for plant phenotypic data, based on the Minimum
+  Information About a Plant Phenotyping Experiment (MIAPPE v1.2) checklist.
+  Slot names follow the original MIAPPE codenames for traceability.
+license: https://creativecommons.org/licenses/by/4.0/
+version: "0.1.0"
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  faceplant: https://github.com/Firstnamehannah/FacePlant-
+  miappe: https://w3id.org/miappe/
+  schema: http://schema.org/
+  ORCID: http://identifiers.org/orcid/
+  DOI: http://identifiers.org/doi/
+  NCBITaxon: http://purl.obolibrary.org/obo/NCBITaxon_
+  CO: http://purl.obolibrary.org/obo/CO_
+  CO_322: "https://cropontology.org/rdf/CO_322:" 
+  CO_715: http://purl.obolibrary.org/obo/CO_715_
+  PO: http://purl.obolibrary.org/obo/PO_
+  PATO: http://purl.obolibrary.org/obo/PATO_
+  TO: http://purl.obolibrary.org/obo/TO_
+  EO: http://purl.obolibrary.org/obo/EO_
+
+default_prefix: faceplant
+default_range: string
+
+imports:
+  - linkml:types
+
+annotations:
+  source:
+    value: >-
+      Derived from the MIAPPE LinkML schema
+      (https://github.com/lakehouse-code/datamodel/blob/main/miappe.yaml),
+      itself generated from MIAPPE_Checklist_Data_Model.tsv in the
+      MIAPPE/MIAPPE GitHub repository.
+  source_version:
+    value: "MIAPPE 1.2"
+
+types:
+  iso8601DateTime:
+    typeof: string
+    description: ISO 8601 date or date-time, with optional timezone.
+    pattern: "^\\d{4}-\\d{2}-\\d{2}([Tt ][0-9:.+-]+(Z|[+-][0-9]{2}:[0-9]{2})?)?$"
+  measurementWithUnit:
+    typeof: string
+    description: Numeric value followed by a unit abbreviation, as used in the MIAPPE checklist.
+  keyValueList:
+    typeof: string
+    description: Key-value pair list encoded as text, usually separated by commas or semicolons.
+
+classes:
+  MIAPPESubmission:
+    tree_root: true
+    description: A complete MIAPPE submission containing exactly one investigation.
+    slots:
+      - investigation
+
+  Investigation:
+    description: >
+      Investigations are research programmes with defined aims. They can exist
+      at various scales, including a grant-funded programme, a publication, or a
+      single experiment.
+    slots:
+      - investigationId
+      - investigationTitle
+      - investigationDescription
+      - submissionDate
+      - publicReleaseDate
+      - license
+      - miappeVersion
+      - associatedPublication
+      - persons
+      - studies
+    slot_usage:
+      persons:
+        required: true
+        annotations:
+          miappe_cardinality:
+            value: 1+ per investigation
+      studies:
+        required: true
+        annotations:
+          miappe_cardinality:
+            value: 1+ per investigation
+
+  Study:
+    description: >
+      A study or experiment comprises a series of assays or measurements of one
+      or more types, undertaken to answer a particular biological question.
+    slots:
+      - studyId
+      - studyTitle
+      - studyDescription
+      - studyStartDate
+      - studyEndDate
+      - contactInst
+      - locationCountry
+      - siteName
+      - locationLatitude
+      - locationLongitude
+      - locationAltitude
+      - expeDesignDesc
+      - expeDesignType
+      - obsUnitLevelHierarchy
+      - obsUnitDesc
+      - growthFacilityDesc
+      - growthFacilityType
+      - culturalPractice
+      - expeDesignMap
+      - persons
+      - dataFiles
+      - biologicalMaterials
+      - environment
+      - experimentalFactors
+      - events
+      - observationUnits
+      - observedVariables
+    slot_usage:
+      persons:
+        required: false
+        annotations:
+          miappe_cardinality:
+            value: 0+ per study
+      biologicalMaterials:
+        required: true
+        annotations:
+          miappe_cardinality:
+            value: 1+ per study
+      observationUnits:
+        required: true
+        annotations:
+          miappe_cardinality:
+            value: 1+ per study
+      observedVariables:
+        required: true
+        annotations:
+          miappe_cardinality:
+            value: 1+ per study
+
+  Person:
+    description: A human involved in the investigation or specifically in one of its studies.
+    slots:
+      - personName
+      - personEmail
+      - personId
+      - personRole
+      - personAffiliation
+
+  DataFile:
+    description: >
+      A file or digital object holding observation data recorded during one or
+      more assays of the study, typically in tabular form.
+    slots:
+      - dataFileLink
+      - dataFileDesc
+      - dataFileVersion
+
+  BiologicalMaterial:
+    description: >
+      The biological material being studied, such as plants grown from a seed
+      bag or plants grown in a particular field.
+    slots:
+      - biologicalMaterialId
+      - biologicalMaterialExtId
+      - organism
+      - genus
+      - species
+      - infraspecificName
+      - biologicalMaterialLatitude
+      - biologicalMaterialLongitude
+      - biologicalMaterialAltitude
+      - biologicalMaterialCoordUncertainty
+      - biologicalMaterialPreprocessing
+      - materialSourceId
+      - materialSourceDoi
+      - materialSourceAccNumber
+      - materialSourceAccName
+      - materialSourceInstCode
+      - materialSourceInstName
+      - materialSourceOtherIds
+      - materialSourceLatitude
+      - materialSourceLongitude
+      - materialSourceAltitude
+      - materialSourceCoordUncertainty
+      - materialSourceDesc
+
+  Environment:
+    description: >
+      Environmental parameters that were kept constant throughout the study and
+      did not change between observation units or assays.
+    slots:
+      - environmentParameters
+
+  EnvironmentParameter:
+    description: A constant environmental parameter and its value.
+    slots:
+      - envParam
+      - envParamValue
+
+  ExperimentalFactor:
+    description: >
+      A condition that varies between observation units and whose impact on the
+      biological material is the object of a study.
+    slots:
+      - expeFactorType
+      - expeFactorDesc
+      - expeFactorValues
+
+  Event:
+    description: >
+      A discrete occurrence at a particular time in the experiment, natural or
+      unnatural, such as planting, rain, fertilizing, or watering.
+    slots:
+      - eventType
+      - eventAccNumber
+      - eventDesc
+      - eventDate
+
+  ObservationUnit:
+    description: >
+      Objects that are subject to instances of observation and measurement.
+      Observation units may comprise plants, their environment, or pure
+      environmental observation units.
+    slots:
+      - obsUnitId
+      - obsUnitType
+      - externalId
+      - spatialDistribution
+      - obsUnitFactorValue
+      - biologicalMaterialRefs
+      - events
+      - samples
+    slot_usage:
+      externalId:
+        description: >
+          Identifier for the observation unit in a persistent repository,
+          comprising the repository name and observation unit identifier.
+        annotations:
+          miappe_label:
+            value: Observation unit external ID
+          miappe_cardinality:
+            value: 0+
+
+  Sample:
+    description: >
+      A portion of plant tissue harvested, non-harvested, or extracted from an
+      observation unit for sub-plant observations and/or molecular studies.
+    slots:
+      - sampleId
+      - developmentStage
+      - anatomicalEntity
+      - sampleDesc
+      - collectionDate
+      - externalId
+    slot_usage:
+      externalId:
+        description: >
+          Identifier for the sample in a persistent repository, comprising the
+          repository name and sample accession number.
+        annotations:
+          miappe_label:
+            value: Sample external ID
+          miappe_cardinality:
+            value: 0+
+
+  ObservedVariable:
+    description: >
+      Description of how a measurement has been made, usually a trait associated
+      with a method and a unit or scale of measurement.
+    slots:
+      - variableId
+      - variableName
+      - variableAccNumber
+      - traitName
+      - traitEntity
+      - traitEntityAccessionNumber
+      - traitCharacteristic
+      - traitCharacteristicAccessionNumber
+      - traitAccNumber
+      - methodName
+      - methodAccNumber
+      - methodDesc
+      - methodRef
+      - scaleName
+      - scaleAccNumber
+      - timeScale
+
+slots:
+  investigation:
+    description: The single investigation represented by a MIAPPE submission.
+    range: Investigation
+    required: true
+    inlined: true
+
+  studies:
+    description: Studies belonging to an investigation.
+    range: Study
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  persons:
+    description: People associated with an investigation or study.
+    range: Person
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  dataFiles:
+    description: Data files associated with a study.
+    range: DataFile
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      miappe_cardinality:
+        value: 0+ per study
+
+  biologicalMaterials:
+    description: Biological materials associated with a study.
+    range: BiologicalMaterial
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  biologicalMaterialRefs:
+    description: >
+      References from an observation unit to biological material identifiers
+      defined in the study-level biologicalMaterials list.
+    range: string
+    multivalued: true
+    annotations:
+      miappe_cardinality:
+        value: 0+ per observation unit
+
+  environment:
+    description: Constant environmental parameters for a study.
+    range: Environment
+    inlined: true
+    annotations:
+      miappe_cardinality:
+        value: 0-1 per study
+
+  environmentParameters:
+    description: Constant environmental parameter values for a study.
+    range: EnvironmentParameter
+    multivalued: true
+    required: true
+    inlined: true
+    inlined_as_list: true
+
+  experimentalFactors:
+    description: Experimental factors associated with a study.
+    range: ExperimentalFactor
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      miappe_cardinality:
+        value: 0+ per study
+
+  events:
+    description: Events associated with a study or observation unit.
+    range: Event
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      miappe_cardinality:
+        value: 0+ per study or observation unit
+
+  observationUnits:
+    description: Observation units associated with a study.
+    range: ObservationUnit
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  samples:
+    description: Samples associated with an observation unit.
+    range: Sample
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      miappe_cardinality:
+        value: 0+ per observation unit
+
+  observedVariables:
+    description: Observed variables associated with a study.
+    range: ObservedVariable
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  investigationId:
+    description: >
+      Identifier comprising the unique name of the institution/database hosting
+      the submission and the accession number of the investigation there.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Investigation unique ID
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Unique identifier
+
+  investigationTitle:
+    description: Human-readable string summarising the investigation.
+    required: true
+    annotations:
+      miappe_label:
+        value: Investigation title
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text (short)
+
+  investigationDescription:
+    description: Human-readable text describing the investigation in more detail.
+    annotations:
+      miappe_label:
+        value: Investigation description
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  submissionDate:
+    description: Date of submission of the dataset being described to a host repository.
+    range: iso8601DateTime
+    annotations:
+      miappe_label:
+        value: Submission date
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Date/Time (ISO 8601, optional time zone)
+
+  publicReleaseDate:
+    description: Date of first public release of the dataset being described.
+    range: iso8601DateTime
+    annotations:
+      miappe_label:
+        value: Public release date
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Date/Time (ISO 8601, optional time zone)
+
+  license:
+    description: License for reuse of the data associated with this investigation.
+    annotations:
+      miappe_label:
+        value: License
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Unique identifier
+
+  miappeVersion:
+    description: The version of MIAPPE used.
+    required: true
+    annotations:
+      miappe_label:
+        value: MIAPPE version
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Version number
+
+  associatedPublication:
+    description: Identifier for a literature publication where the investigation is described.
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Associated publication
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: DOI
+
+  studyId:
+    description: >
+      Unique identifier comprising the name or identifier for the institution or
+      database hosting the study data and the identifier of the study there.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Study unique ID
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Unique identifier
+
+  studyTitle:
+    description: Human-readable name summarising the study.
+    required: true
+    annotations:
+      miappe_label:
+        value: Study title
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text (short)
+
+  studyDescription:
+    description: Human-readable text describing the study.
+    annotations:
+      miappe_label:
+        value: Study description
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  studyStartDate:
+    description: Date and, if relevant, time when the experiment started.
+    range: iso8601DateTime
+    required: true
+    annotations:
+      miappe_label:
+        value: Start date of study
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Date/Time (ISO 8601, optional time zone)
+
+  studyEndDate:
+    description: Date and, if relevant, time when the experiment ended.
+    range: iso8601DateTime
+    annotations:
+      miappe_label:
+        value: End date of study
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Date/Time (ISO 8601, optional time zone)
+
+  contactInst:
+    description: Name and address of the institution responsible for the study.
+    required: true
+    annotations:
+      miappe_label:
+        value: Contact institution
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text (short)
+
+  locationCountry:
+    description: >
+      Country where the experiment took place, either as a full name or
+      preferably as a 2-letter ISO 3166 country code.
+    required: true
+    annotations:
+      miappe_label:
+        value: Geographic location (country)
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Country name or 2-letter code (ISO 3166)
+
+  siteName:
+    description: >
+      Name of the natural site, experimental field, greenhouse, phenotyping
+      facility, or other site where the experiment took place.
+    required: true
+    annotations:
+      miappe_label:
+        value: Experimental site name
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text (short)
+
+  locationLatitude:
+    description: Latitude of the experimental site in decimal degrees.
+    range: decimal
+    minimum_value: -90
+    maximum_value: 90
+    annotations:
+      miappe_label:
+        value: Geographic location (latitude)
+      miappe_cardinality:
+        value: 0-1 (1 if longitude is provided)
+      miappe_format:
+        value: Degrees in decimal format (ISO 6709)
+
+  locationLongitude:
+    description: Longitude of the experimental site in decimal degrees.
+    range: decimal
+    minimum_value: -180
+    maximum_value: 180
+    annotations:
+      miappe_label:
+        value: Geographic location (longitude)
+      miappe_cardinality:
+        value: 0-1 (1 if latitude is provided)
+      miappe_format:
+        value: Degrees in decimal format (ISO 6709)
+
+  locationAltitude:
+    description: Altitude of the experimental site, provided in metres.
+    range: measurementWithUnit
+    annotations:
+      miappe_label:
+        value: Geographic location (altitude)
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Numeric + unit abbreviation
+
+  expeDesignDesc:
+    description: Short description of the experimental design, possibly including statistical design.
+    required: true
+    annotations:
+      miappe_label:
+        value: Description of the experimental design
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text
+
+  expeDesignType:
+    description: Type of experimental design of the study, preferably as a Crop Ontology accession.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Type of experimental design
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Crop Ontology term
+
+  obsUnitLevelHierarchy:
+    description: Hierarchy of the different levels of repetition.
+    annotations:
+      miappe_label:
+        value: Observation unit level hierarchy
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Formatted text (level>level)
+
+  obsUnitDesc:
+    description: General description of the observation units in the study.
+    required: true
+    annotations:
+      miappe_label:
+        value: Observation unit description
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text
+
+  growthFacilityDesc:
+    description: Short description of the facility in which the study was carried out.
+    required: true
+    annotations:
+      miappe_label:
+        value: Description of growth facility
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text (short)
+
+  growthFacilityType:
+    description: Type of growth facility, preferably as a Crop Ontology accession.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Type of growth facility
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Crop Ontology term
+
+  culturalPractice:
+    description: General description of the cultural practices of the study.
+    annotations:
+      miappe_label:
+        value: Cultural practices
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  expeDesignMap:
+    description: Representation of the experimental design as a URL or file name.
+    range: string
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Map of experimental design
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: URL or file name
+
+  personName:
+    description: The person's name, either full name or as used in scientific publications.
+    required: true
+    annotations:
+      miappe_label:
+        value: Person name
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Name
+
+  personEmail:
+    description: The electronic mail address of the person.
+    range: string
+    pattern: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+    annotations:
+      miappe_label:
+        value: Person email
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: email address
+
+  personId:
+    description: Identifier for the data submitter or person. ORCID identifiers are recommended.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Person ID
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Unique identifier
+
+  personRole:
+    description: Type of contribution of the person to the investigation.
+    required: true
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Person role
+      miappe_cardinality:
+        value: 1+
+      miappe_format:
+        value: Free text (short)
+
+  personAffiliation:
+    description: The institution the person belongs to.
+    required: true
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Person affiliation
+      miappe_cardinality:
+        value: 1+
+      miappe_format:
+        value: Free text (short)
+
+  dataFileLink:
+    description: Link to the data file or identifier of a data file submitted with the MIAPPE submission.
+    required: true
+    annotations:
+      miappe_label:
+        value: Data file link
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: URL or file name
+
+  dataFileDesc:
+    description: Description of the data file format.
+    required: true
+    annotations:
+      miappe_label:
+        value: Data file description
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text (short)
+
+  dataFileVersion:
+    description: Version of the dataset or actual data.
+    annotations:
+      miappe_label:
+        value: Data file version
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Software version number
+
+  biologicalMaterialId:
+    description: >
+      Code used to identify the biological material in the data file. It should
+      be unique within the investigation.
+    identifier: true
+    required: true
+    annotations:
+      miappe_label:
+        value: Biological material ID
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Unique identifier
+
+  biologicalMaterialExtId:
+    description: One or more external identifiers for the biological material.
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Biological material external ID
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: Semicolon-separated list of unique identifiers
+
+  organism:
+    description: Identifier for the organism at species level. NCBI Taxon ID is recommended.
+    range: uriorcurie
+    required: true
+    annotations:
+      miappe_label:
+        value: Organism
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Unique identifier
+
+  genus:
+    description: Genus name for the organism under study.
+    annotations:
+      miappe_label:
+        value: Genus
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Genus name
+
+  species:
+    description: Species name or specific epithet for the organism under study.
+    annotations:
+      miappe_label:
+        value: Species
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Species name
+
+  infraspecificName:
+    description: Name of any subtaxa level, including variety, crossing name, cultivar, or line.
+    range: keyValueList
+    annotations:
+      miappe_label:
+        value: Infraspecific name
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Key-value pair list or MCPD-compliant format
+
+  biologicalMaterialLatitude:
+    description: Latitude of the studied biological material.
+    range: decimal
+    minimum_value: -90
+    maximum_value: 90
+    annotations:
+      miappe_label:
+        value: Biological material latitude
+      miappe_cardinality:
+        value: 0-1 (1 if longitude is provided)
+      miappe_format:
+        value: Degrees in decimal format (ISO 6709)
+
+  biologicalMaterialLongitude:
+    description: Longitude of the studied biological material.
+    range: decimal
+    minimum_value: -180
+    maximum_value: 180
+    annotations:
+      miappe_label:
+        value: Biological material longitude
+      miappe_cardinality:
+        value: 0-1 (1 if latitude is provided)
+      miappe_format:
+        value: Degrees in decimal format (ISO 6709)
+
+  biologicalMaterialAltitude:
+    description: Altitude of the studied biological material, provided in meters.
+    range: measurementWithUnit
+    annotations:
+      miappe_label:
+        value: Biological material altitude
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Numeric + unit abbreviation
+
+  biologicalMaterialCoordUncertainty:
+    description: Circular uncertainty of the coordinates, preferably provided in meters.
+    range: measurementWithUnit
+    annotations:
+      miappe_label:
+        value: Biological material coordinates uncertainty
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Numeric
+
+  biologicalMaterialPreprocessing:
+    description: >
+      Description of any process or treatment applied uniformly to the biological
+      material before the study itself.
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Biological material preprocessing
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: Plant Environment Ontology and/or free text
+
+  materialSourceId:
+    description: >
+      Identifier for the source of the biological material, commonly called
+      germplasm, accession, genotype, or variety.
+    annotations:
+      miappe_label:
+        value: Material source ID (Holding institute/stock centre, accession)
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Unique identifier
+
+  materialSourceDoi:
+    description: Digital Object Identifier of the material source.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Material source DOI
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: DOI
+
+  materialSourceAccNumber:
+    description: Unique identifier for accessions within a genebank or laboratory.
+    annotations:
+      miappe_label:
+        value: Material source accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Unique identifier
+
+  materialSourceAccName:
+    description: Genebank accession registered name, other designation, or variety name.
+    annotations:
+      miappe_label:
+        value: Material source accession name
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text (short)
+
+  materialSourceInstCode:
+    description: FAO WIEWS code of the institute where the accession is maintained.
+    annotations:
+      miappe_label:
+        value: Material source institute code
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Unique identifier
+
+  materialSourceInstName:
+    description: Name of the material source institute.
+    annotations:
+      miappe_label:
+        value: Material source institute name
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Institute name
+
+  materialSourceOtherIds:
+    description: Other identifiers known to exist in other collections for this material source.
+    range: keyValueList
+    annotations:
+      miappe_label:
+        value: Material source other identifiers
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Key:Value pairs
+
+  materialSourceLatitude:
+    description: Latitude of the material source.
+    range: decimal
+    minimum_value: -90
+    maximum_value: 90
+    annotations:
+      miappe_label:
+        value: Material source latitude
+      miappe_cardinality:
+        value: 0-1 (1 if longitude is provided)
+      miappe_format:
+        value: Degrees in decimal format (ISO 6709)
+
+  materialSourceLongitude:
+    description: Longitude of the material source.
+    range: decimal
+    minimum_value: -180
+    maximum_value: 180
+    annotations:
+      miappe_label:
+        value: Material source longitude
+      miappe_cardinality:
+        value: 0-1 (1 if latitude is provided)
+      miappe_format:
+        value: Degrees in decimal format (ISO 6709)
+
+  materialSourceAltitude:
+    description: Altitude of the material source, provided in metres.
+    range: measurementWithUnit
+    annotations:
+      miappe_label:
+        value: Material source altitude
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Numeric + unit abbreviation
+
+  materialSourceCoordUncertainty:
+    description: Circular uncertainty of the coordinates, provided in meters.
+    range: measurementWithUnit
+    annotations:
+      miappe_label:
+        value: Material source coordinates uncertainty
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Numeric + unit abbreviation
+
+  materialSourceDesc:
+    description: Description of the material source.
+    annotations:
+      miappe_label:
+        value: Material source description
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  envParam:
+    description: Name of an environment parameter constant within the experiment.
+    required: true
+    annotations:
+      miappe_label:
+        value: Environment parameter
+      miappe_cardinality:
+        value: 1+
+      miappe_format:
+        value: Free text
+
+  envParamValue:
+    description: Value of the environment parameter constant within the experiment.
+    required: true
+    annotations:
+      miappe_label:
+        value: Environment parameter value
+      miappe_cardinality:
+        value: 1 per parameter
+      miappe_format:
+        value: Free text
+
+  expeFactorType:
+    description: Name or acronym of the experimental factor.
+    required: true
+    annotations:
+      miappe_label:
+        value: Experimental Factor type
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text
+
+  expeFactorDesc:
+    description: >
+      Free text description of the experimental factor, including relevant
+      treatment planning and protocol details.
+    annotations:
+      miappe_label:
+        value: Experimental Factor description
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  expeFactorValues:
+    description: List of possible values for the experimental factor.
+    required: true
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Experimental Factor values
+      miappe_cardinality:
+        value: 2+ per factor
+      miappe_format:
+        value: Free text
+
+  eventType:
+    description: Short name of the event.
+    required: true
+    annotations:
+      miappe_label:
+        value: Event type
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text (short)
+
+  eventAccNumber:
+    description: Accession number of the event type in a suitable controlled vocabulary.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Event accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Crop Ontology term
+
+  eventDesc:
+    description: Description of the event, including amount applied and possibly duration.
+    annotations:
+      miappe_label:
+        value: Event description
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  eventDate:
+    description: Date and time of the event.
+    range: iso8601DateTime
+    required: true
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Event date
+      miappe_cardinality:
+        value: 1+
+      miappe_format:
+        value: Date/Time (ISO 8601, optional time zone)
+
+  obsUnitId:
+    description: >
+      Identifier used to identify the observation unit in data files containing
+      values observed or measured on that unit.
+    identifier: true
+    required: true
+    annotations:
+      miappe_label:
+        value: Observation unit ID
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Unique identifier
+
+  obsUnitType:
+    description: >
+      Type of observation unit in textual form, usually study, block, sub-block,
+      plot, sub-plot, pot, or plant.
+    required: true
+    annotations:
+      miappe_label:
+        value: Observation unit type
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text
+
+  externalId:
+    description: External identifier in a persistent repository.
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: Unique identifier
+
+  spatialDistribution:
+    description: >
+      Type and value of a spatial coordinate or level of observation as a
+      key-value pair.
+    range: keyValueList
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Spatial distribution
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: Formatted text (Key:value)
+
+  obsUnitFactorValue:
+    description: List of values for each factor applied to the observation unit.
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Observation Unit factor value
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: Free text
+
+  sampleId:
+    description: Unique identifier for the sample.
+    identifier: true
+    required: true
+    annotations:
+      miappe_label:
+        value: Sample ID
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Unique identifier
+
+  developmentStage:
+    description: >
+      Stage in the life of a plant structure during which the sample was taken,
+      preferably as a Plant Ontology or BBCH accession.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Plant structure development stage
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Plant Ontology term or BBCH scale term
+
+  anatomicalEntity:
+    description: >
+      Plant part or product from which the sample was taken, preferably as a
+      Plant Ontology accession.
+    range: uriorcurie
+    required: true
+    annotations:
+      miappe_label:
+        value: Plant anatomical entity
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Plant Ontology term
+
+  sampleDesc:
+    description: >
+      Information not captured by other sample fields, including quantification,
+      sample treatments, and processing.
+    annotations:
+      miappe_label:
+        value: Sample description
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  collectionDate:
+    description: Date and time when the sample was collected or harvested.
+    range: iso8601DateTime
+    required: true
+    annotations:
+      miappe_label:
+        value: Collection date
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Date/Time
+
+  variableId:
+    description: >
+      Code used to identify the variable in the data file. It must be unique
+      within a given investigation.
+    identifier: true
+    required: true
+    annotations:
+      miappe_label:
+        value: Variable ID
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Unique identifier
+
+  variableName:
+    description: Name of the variable.
+    annotations:
+      miappe_label:
+        value: Variable name
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  variableAccNumber:
+    description: Accession number of the variable in the Crop Ontology.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Variable accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Crop Ontology term
+
+  traitName:
+    description: Name of the plant or environmental trait under observation.
+    required: true
+    annotations:
+      miappe_label:
+        value: Trait
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text
+
+  traitEntity:
+    description: Entity on which the trait has been measured.
+    annotations:
+      miappe_label:
+        value: Trait Entity
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  traitEntityAccessionNumber:
+    description: Accession number of the trait entity in a suitable controlled vocabulary.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Trait Entity Accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Ontology term
+
+  traitCharacteristic:
+    description: Characteristic measured, such as size, volume, surface, or sugar concentration.
+    annotations:
+      miappe_label:
+        value: Trait Characteristic
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  traitCharacteristicAccessionNumber:
+    description: Accession number of the trait characteristic in a suitable controlled vocabulary.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Trait Characteristic Accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Ontology term
+
+  traitAccNumber:
+    description: Accession number of the trait in a suitable controlled vocabulary.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Trait accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Ontology term
+
+  methodName:
+    description: Name of the method of observation.
+    required: true
+    annotations:
+      miappe_label:
+        value: Method
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Free text
+
+  methodAccNumber:
+    description: Accession number of the method in a suitable controlled vocabulary.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Method accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Ontology term
+
+  methodDesc:
+    description: >
+      Textual description of the method, which may extend an externally defined
+      method with specific parameters.
+    annotations:
+      miappe_label:
+        value: Method description
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Free text
+
+  methodRef:
+    description: URI or DOI of a reference describing the method.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Reference associated to the method
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: URI or DOI
+
+  scaleName:
+    description: Name of the scale associated with the variable.
+    required: true
+    annotations:
+      miappe_label:
+        value: Scale
+      miappe_cardinality:
+        value: "1"
+      miappe_format:
+        value: Unique identifier
+
+  scaleAccNumber:
+    description: Accession number of the scale in a suitable controlled vocabulary.
+    range: uriorcurie
+    annotations:
+      miappe_label:
+        value: Scale accession number
+      miappe_cardinality:
+        value: 0-1
+      miappe_format:
+        value: Crop Ontology term
+
+  timeScale:
+    description: >
+      Scale or unit of time with which observations of this type were recorded
+      in the data file, for time series studies.
+    multivalued: true
+    annotations:
+      miappe_label:
+        value: Time scale
+      miappe_cardinality:
+        value: 0+
+      miappe_format:
+        value: Free text
