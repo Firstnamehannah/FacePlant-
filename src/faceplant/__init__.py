@@ -1,6 +1,6 @@
 """FacePlant.
 
-This is a lite version of FacePlant - my plant data model. 
+This is a lite version of FacePlant - a plant phenomics data model.
 """
 
 try:

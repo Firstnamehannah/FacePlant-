@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "faceplant"
-description = "This is a lite version of FacePlant - my plant data model. "
+description = "This is a lite version of FacePlant - a plant phenomics data model."
 authors = [
   {name = "Hannah Keenhold", email = "keenholdhc@gmail.com"},
 ]

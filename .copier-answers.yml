@@ -1,7 +1,7 @@
 # Changes here will be overwritten by Copier
 _commit: v0.5.0
 _src_path: https://github.com/linkml/linkml-project-copier
-add_example: true
+add_example: false
 copyright_year: '2026'
 email: keenholdhc@gmail.com
 existing_license_file: ''
@@ -10,7 +10,8 @@ gh_action_docs_preview: true
 gh_action_pypi: true
 github_org: firstnamehannah
 license: Apache-2.0
-project_description: 'This is a lite version of FacePlant - my plant data model. '
+project_description: This is a lite version of FacePlant - a plant phenomics data
+    model.
 project_name: FacePlant
 project_slug: faceplant
 
