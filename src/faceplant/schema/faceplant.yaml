@@ -3,7 +3,7 @@ id: https://w3id.org/firstnamehannah/FacePlant
 name: FacePlant
 title: FacePlant
 description: |-
-  This is a lite version of FacePlant - my plant data model. 
+  This is a lite version of FacePlant - a plant phenomics data model.  
 license: Apache-2.0
 see_also:
   - https://firstnamehannah.github.io/FacePlant
