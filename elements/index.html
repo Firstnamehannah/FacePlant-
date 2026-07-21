@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#faceplant" class="md-skip">
+        <a href="#faceplant-a-plant-phenotypic-data-model" class="md-skip">
           Skip to content
         </a>
       
@@ -546,10 +546,10 @@
   
 
 
-<h1 id="faceplant">FacePlant</h1>
-<p>This is a lite version of FacePlant - a plant phenomics data model.  </p>
-<p>URI: <a href="https://w3id.org/firstnamehannah/FacePlant">https://w3id.org/firstnamehannah/FacePlant</a></p>
-<p>Name: FacePlant</p>
+<h1 id="faceplant-a-plant-phenotypic-data-model">FacePlant: a plant phenotypic data model</h1>
+<p>A LinkML data model for plant phenotypic data, based on the Minimum Information About a Plant Phenotyping Experiment (MIAPPE v1.2) checklist. Slot names follow the original MIAPPE codenames for traceability.</p>
+<p>URI: <a href="https://w3id.org/your-org/faceplant">https://w3id.org/your-org/faceplant</a></p>
+<p>Name: faceplant</p>
 <h2 id="classes">Classes</h2>
 <table>
 <thead>
@@ -560,16 +560,56 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="NamedThing/">NamedThing</a></td>
-<td>A generic grouping for any identifiable entity</td>
+<td><a href="BiologicalMaterial/">BiologicalMaterial</a></td>
+<td>The biological material being studied, such as plants grown from a seed bag o...</td>
 </tr>
 <tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="Person/">Person</a></td>
-<td>Represents a Person</td>
+<td><a href="DataFile/">DataFile</a></td>
+<td>A file or digital object holding observation data recorded during one or more...</td>
 </tr>
 <tr>
-<td><a href="PersonCollection/">PersonCollection</a></td>
-<td>A holder for Person objects</td>
+<td><a href="Environment/">Environment</a></td>
+<td>Environmental parameters that were kept constant throughout the study and did...</td>
+</tr>
+<tr>
+<td><a href="EnvironmentParameter/">EnvironmentParameter</a></td>
+<td>A constant environmental parameter and its value</td>
+</tr>
+<tr>
+<td><a href="Event/">Event</a></td>
+<td>A discrete occurrence at a particular time in the experiment, natural or unna...</td>
+</tr>
+<tr>
+<td><a href="ExperimentalFactor/">ExperimentalFactor</a></td>
+<td>A condition that varies between observation units and whose impact on the bio...</td>
+</tr>
+<tr>
+<td><a href="Investigation/">Investigation</a></td>
+<td>Investigations are research programmes with defined aims</td>
+</tr>
+<tr>
+<td><a href="MIAPPESubmission/">MIAPPESubmission</a></td>
+<td>A complete MIAPPE submission containing exactly one investigation</td>
+</tr>
+<tr>
+<td><a href="ObservationUnit/">ObservationUnit</a></td>
+<td>Objects that are subject to instances of observation and measurement</td>
+</tr>
+<tr>
+<td><a href="ObservedVariable/">ObservedVariable</a></td>
+<td>Description of how a measurement has been made, usually a trait associated wi...</td>
+</tr>
+<tr>
+<td><a href="Person/">Person</a></td>
+<td>A human involved in the investigation or specifically in one of its studies</td>
+</tr>
+<tr>
+<td><a href="Sample/">Sample</a></td>
+<td>A portion of plant tissue harvested, non-harvested, or extracted from an obse...</td>
+</tr>
+<tr>
+<td><a href="Study/">Study</a></td>
+<td>A study or experiment comprises a series of assays or measurements of one or ...</td>
 </tr>
 </tbody>
 </table>
@@ -583,36 +623,428 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="age_in_years/">age_in_years</a></td>
-<td>Number of years since birth</td>
+<td><a href="anatomicalEntity/">anatomicalEntity</a></td>
+<td>Plant part or product from which the sample was taken, preferably as a Plant ...</td>
 </tr>
 <tr>
-<td><a href="birth_date/">birth_date</a></td>
-<td>Date on which a person is born</td>
+<td><a href="associatedPublication/">associatedPublication</a></td>
+<td>Identifier for a literature publication where the investigation is described</td>
 </tr>
 <tr>
-<td><a href="description/">description</a></td>
-<td>A human-readable description for a thing</td>
+<td><a href="biologicalMaterialAltitude/">biologicalMaterialAltitude</a></td>
+<td>Altitude of the studied biological material, provided in meters</td>
 </tr>
 <tr>
-<td><a href="id/">id</a></td>
-<td>A unique identifier for a thing</td>
+<td><a href="biologicalMaterialCoordUncertainty/">biologicalMaterialCoordUncertainty</a></td>
+<td>Circular uncertainty of the coordinates, preferably provided in meters</td>
 </tr>
 <tr>
-<td><a href="name/">name</a></td>
-<td>A human-readable name for a thing</td>
+<td><a href="biologicalMaterialExtId/">biologicalMaterialExtId</a></td>
+<td>One or more external identifiers for the biological material</td>
 </tr>
 <tr>
-<td><a href="people/">people</a></td>
-<td></td>
+<td><a href="biologicalMaterialId/">biologicalMaterialId</a></td>
+<td>Code used to identify the biological material in the data file</td>
 </tr>
 <tr>
-<td><a href="primary_email/">primary_email</a></td>
-<td>The main email address of a person</td>
+<td><a href="biologicalMaterialLatitude/">biologicalMaterialLatitude</a></td>
+<td>Latitude of the studied biological material</td>
 </tr>
 <tr>
-<td><a href="vital_status/">vital_status</a></td>
-<td>living or dead status</td>
+<td><a href="biologicalMaterialLongitude/">biologicalMaterialLongitude</a></td>
+<td>Longitude of the studied biological material</td>
+</tr>
+<tr>
+<td><a href="biologicalMaterialPreprocessing/">biologicalMaterialPreprocessing</a></td>
+<td>Description of any process or treatment applied uniformly to the biological m...</td>
+</tr>
+<tr>
+<td><a href="biologicalMaterialRefs/">biologicalMaterialRefs</a></td>
+<td>References from an observation unit to biological material identifiers define...</td>
+</tr>
+<tr>
+<td><a href="biologicalMaterials/">biologicalMaterials</a></td>
+<td>Biological materials associated with a study</td>
+</tr>
+<tr>
+<td><a href="collectionDate/">collectionDate</a></td>
+<td>Date and time when the sample was collected or harvested</td>
+</tr>
+<tr>
+<td><a href="contactInst/">contactInst</a></td>
+<td>Name and address of the institution responsible for the study</td>
+</tr>
+<tr>
+<td><a href="culturalPractice/">culturalPractice</a></td>
+<td>General description of the cultural practices of the study</td>
+</tr>
+<tr>
+<td><a href="dataFileDesc/">dataFileDesc</a></td>
+<td>Description of the data file format</td>
+</tr>
+<tr>
+<td><a href="dataFileLink/">dataFileLink</a></td>
+<td>Link to the data file or identifier of a data file submitted with the MIAPPE ...</td>
+</tr>
+<tr>
+<td><a href="dataFiles/">dataFiles</a></td>
+<td>Data files associated with a study</td>
+</tr>
+<tr>
+<td><a href="dataFileVersion/">dataFileVersion</a></td>
+<td>Version of the dataset or actual data</td>
+</tr>
+<tr>
+<td><a href="developmentStage/">developmentStage</a></td>
+<td>Stage in the life of a plant structure during which the sample was taken, pre...</td>
+</tr>
+<tr>
+<td><a href="environment/">environment</a></td>
+<td>Constant environmental parameters for a study</td>
+</tr>
+<tr>
+<td><a href="environmentParameters/">environmentParameters</a></td>
+<td>Constant environmental parameter values for a study</td>
+</tr>
+<tr>
+<td><a href="envParam/">envParam</a></td>
+<td>Name of an environment parameter constant within the experiment</td>
+</tr>
+<tr>
+<td><a href="envParamValue/">envParamValue</a></td>
+<td>Value of the environment parameter constant within the experiment</td>
+</tr>
+<tr>
+<td><a href="eventAccNumber/">eventAccNumber</a></td>
+<td>Accession number of the event type in a suitable controlled vocabulary</td>
+</tr>
+<tr>
+<td><a href="eventDate/">eventDate</a></td>
+<td>Date and time of the event</td>
+</tr>
+<tr>
+<td><a href="eventDesc/">eventDesc</a></td>
+<td>Description of the event, including amount applied and possibly duration</td>
+</tr>
+<tr>
+<td><a href="events/">events</a></td>
+<td>Events associated with a study or observation unit</td>
+</tr>
+<tr>
+<td><a href="eventType/">eventType</a></td>
+<td>Short name of the event</td>
+</tr>
+<tr>
+<td><a href="expeDesignDesc/">expeDesignDesc</a></td>
+<td>Short description of the experimental design, possibly including statistical ...</td>
+</tr>
+<tr>
+<td><a href="expeDesignMap/">expeDesignMap</a></td>
+<td>Representation of the experimental design as a URL or file name</td>
+</tr>
+<tr>
+<td><a href="expeDesignType/">expeDesignType</a></td>
+<td>Type of experimental design of the study, preferably as a Crop Ontology acces...</td>
+</tr>
+<tr>
+<td><a href="expeFactorDesc/">expeFactorDesc</a></td>
+<td>Free text description of the experimental factor, including relevant treatmen...</td>
+</tr>
+<tr>
+<td><a href="expeFactorType/">expeFactorType</a></td>
+<td>Name or acronym of the experimental factor</td>
+</tr>
+<tr>
+<td><a href="expeFactorValues/">expeFactorValues</a></td>
+<td>List of possible values for the experimental factor</td>
+</tr>
+<tr>
+<td><a href="experimentalFactors/">experimentalFactors</a></td>
+<td>Experimental factors associated with a study</td>
+</tr>
+<tr>
+<td><a href="externalId/">externalId</a></td>
+<td>External identifier in a persistent repository</td>
+</tr>
+<tr>
+<td><a href="genus/">genus</a></td>
+<td>Genus name for the organism under study</td>
+</tr>
+<tr>
+<td><a href="growthFacilityDesc/">growthFacilityDesc</a></td>
+<td>Short description of the facility in which the study was carried out</td>
+</tr>
+<tr>
+<td><a href="growthFacilityType/">growthFacilityType</a></td>
+<td>Type of growth facility, preferably as a Crop Ontology accession</td>
+</tr>
+<tr>
+<td><a href="infraspecificName/">infraspecificName</a></td>
+<td>Name of any subtaxa level, including variety, crossing name, cultivar, or lin...</td>
+</tr>
+<tr>
+<td><a href="investigation/">investigation</a></td>
+<td>The single investigation represented by a MIAPPE submission</td>
+</tr>
+<tr>
+<td><a href="investigationDescription/">investigationDescription</a></td>
+<td>Human-readable text describing the investigation in more detail</td>
+</tr>
+<tr>
+<td><a href="investigationId/">investigationId</a></td>
+<td>Identifier comprising the unique name of the institution/database hosting the...</td>
+</tr>
+<tr>
+<td><a href="investigationTitle/">investigationTitle</a></td>
+<td>Human-readable string summarising the investigation</td>
+</tr>
+<tr>
+<td><a href="license/">license</a></td>
+<td>License for reuse of the data associated with this investigation</td>
+</tr>
+<tr>
+<td><a href="locationAltitude/">locationAltitude</a></td>
+<td>Altitude of the experimental site, provided in metres</td>
+</tr>
+<tr>
+<td><a href="locationCountry/">locationCountry</a></td>
+<td>Country where the experiment took place, either as a full name or preferably ...</td>
+</tr>
+<tr>
+<td><a href="locationLatitude/">locationLatitude</a></td>
+<td>Latitude of the experimental site in decimal degrees</td>
+</tr>
+<tr>
+<td><a href="locationLongitude/">locationLongitude</a></td>
+<td>Longitude of the experimental site in decimal degrees</td>
+</tr>
+<tr>
+<td><a href="materialSourceAccName/">materialSourceAccName</a></td>
+<td>Genebank accession registered name, other designation, or variety name</td>
+</tr>
+<tr>
+<td><a href="materialSourceAccNumber/">materialSourceAccNumber</a></td>
+<td>Unique identifier for accessions within a genebank or laboratory</td>
+</tr>
+<tr>
+<td><a href="materialSourceAltitude/">materialSourceAltitude</a></td>
+<td>Altitude of the material source, provided in metres</td>
+</tr>
+<tr>
+<td><a href="materialSourceCoordUncertainty/">materialSourceCoordUncertainty</a></td>
+<td>Circular uncertainty of the coordinates, provided in meters</td>
+</tr>
+<tr>
+<td><a href="materialSourceDesc/">materialSourceDesc</a></td>
+<td>Description of the material source</td>
+</tr>
+<tr>
+<td><a href="materialSourceDoi/">materialSourceDoi</a></td>
+<td>Digital Object Identifier of the material source</td>
+</tr>
+<tr>
+<td><a href="materialSourceId/">materialSourceId</a></td>
+<td>Identifier for the source of the biological material, commonly called germpla...</td>
+</tr>
+<tr>
+<td><a href="materialSourceInstCode/">materialSourceInstCode</a></td>
+<td>FAO WIEWS code of the institute where the accession is maintained</td>
+</tr>
+<tr>
+<td><a href="materialSourceInstName/">materialSourceInstName</a></td>
+<td>Name of the material source institute</td>
+</tr>
+<tr>
+<td><a href="materialSourceLatitude/">materialSourceLatitude</a></td>
+<td>Latitude of the material source</td>
+</tr>
+<tr>
+<td><a href="materialSourceLongitude/">materialSourceLongitude</a></td>
+<td>Longitude of the material source</td>
+</tr>
+<tr>
+<td><a href="materialSourceOtherIds/">materialSourceOtherIds</a></td>
+<td>Other identifiers known to exist in other collections for this material sourc...</td>
+</tr>
+<tr>
+<td><a href="methodAccNumber/">methodAccNumber</a></td>
+<td>Accession number of the method in a suitable controlled vocabulary</td>
+</tr>
+<tr>
+<td><a href="methodDesc/">methodDesc</a></td>
+<td>Textual description of the method, which may extend an externally defined met...</td>
+</tr>
+<tr>
+<td><a href="methodName/">methodName</a></td>
+<td>Name of the method of observation</td>
+</tr>
+<tr>
+<td><a href="methodRef/">methodRef</a></td>
+<td>URI or DOI of a reference describing the method</td>
+</tr>
+<tr>
+<td><a href="miappeVersion/">miappeVersion</a></td>
+<td>The version of MIAPPE used</td>
+</tr>
+<tr>
+<td><a href="observationUnits/">observationUnits</a></td>
+<td>Observation units associated with a study</td>
+</tr>
+<tr>
+<td><a href="observedVariables/">observedVariables</a></td>
+<td>Observed variables associated with a study</td>
+</tr>
+<tr>
+<td><a href="obsUnitDesc/">obsUnitDesc</a></td>
+<td>General description of the observation units in the study</td>
+</tr>
+<tr>
+<td><a href="obsUnitFactorValue/">obsUnitFactorValue</a></td>
+<td>List of values for each factor applied to the observation unit</td>
+</tr>
+<tr>
+<td><a href="obsUnitId/">obsUnitId</a></td>
+<td>Identifier used to identify the observation unit in data files containing val...</td>
+</tr>
+<tr>
+<td><a href="obsUnitLevelHierarchy/">obsUnitLevelHierarchy</a></td>
+<td>Hierarchy of the different levels of repetition</td>
+</tr>
+<tr>
+<td><a href="obsUnitType/">obsUnitType</a></td>
+<td>Type of observation unit in textual form, usually study, block, sub-block, pl...</td>
+</tr>
+<tr>
+<td><a href="organism/">organism</a></td>
+<td>Identifier for the organism at species level</td>
+</tr>
+<tr>
+<td><a href="personAffiliation/">personAffiliation</a></td>
+<td>The institution the person belongs to</td>
+</tr>
+<tr>
+<td><a href="personEmail/">personEmail</a></td>
+<td>The electronic mail address of the person</td>
+</tr>
+<tr>
+<td><a href="personId/">personId</a></td>
+<td>Identifier for the data submitter or person</td>
+</tr>
+<tr>
+<td><a href="personName/">personName</a></td>
+<td>The person's name, either full name or as used in scientific publications</td>
+</tr>
+<tr>
+<td><a href="personRole/">personRole</a></td>
+<td>Type of contribution of the person to the investigation</td>
+</tr>
+<tr>
+<td><a href="persons/">persons</a></td>
+<td>People associated with an investigation or study</td>
+</tr>
+<tr>
+<td><a href="publicReleaseDate/">publicReleaseDate</a></td>
+<td>Date of first public release of the dataset being described</td>
+</tr>
+<tr>
+<td><a href="sampleDesc/">sampleDesc</a></td>
+<td>Information not captured by other sample fields, including quantification, sa...</td>
+</tr>
+<tr>
+<td><a href="sampleId/">sampleId</a></td>
+<td>Unique identifier for the sample</td>
+</tr>
+<tr>
+<td><a href="samples/">samples</a></td>
+<td>Samples associated with an observation unit</td>
+</tr>
+<tr>
+<td><a href="scaleAccNumber/">scaleAccNumber</a></td>
+<td>Accession number of the scale in a suitable controlled vocabulary</td>
+</tr>
+<tr>
+<td><a href="scaleName/">scaleName</a></td>
+<td>Name of the scale associated with the variable</td>
+</tr>
+<tr>
+<td><a href="siteName/">siteName</a></td>
+<td>Name of the natural site, experimental field, greenhouse, phenotyping facilit...</td>
+</tr>
+<tr>
+<td><a href="spatialDistribution/">spatialDistribution</a></td>
+<td>Type and value of a spatial coordinate or level of observation as a key-value...</td>
+</tr>
+<tr>
+<td><a href="species/">species</a></td>
+<td>Species name or specific epithet for the organism under study</td>
+</tr>
+<tr>
+<td><a href="studies/">studies</a></td>
+<td>Studies belonging to an investigation</td>
+</tr>
+<tr>
+<td><a href="studyDescription/">studyDescription</a></td>
+<td>Human-readable text describing the study</td>
+</tr>
+<tr>
+<td><a href="studyEndDate/">studyEndDate</a></td>
+<td>Date and, if relevant, time when the experiment ended</td>
+</tr>
+<tr>
+<td><a href="studyId/">studyId</a></td>
+<td>Unique identifier comprising the name or identifier for the institution or da...</td>
+</tr>
+<tr>
+<td><a href="studyStartDate/">studyStartDate</a></td>
+<td>Date and, if relevant, time when the experiment started</td>
+</tr>
+<tr>
+<td><a href="studyTitle/">studyTitle</a></td>
+<td>Human-readable name summarising the study</td>
+</tr>
+<tr>
+<td><a href="submissionDate/">submissionDate</a></td>
+<td>Date of submission of the dataset being described to a host repository</td>
+</tr>
+<tr>
+<td><a href="timeScale/">timeScale</a></td>
+<td>Scale or unit of time with which observations of this type were recorded in t...</td>
+</tr>
+<tr>
+<td><a href="traitAccNumber/">traitAccNumber</a></td>
+<td>Accession number of the trait in a suitable controlled vocabulary</td>
+</tr>
+<tr>
+<td><a href="traitCharacteristic/">traitCharacteristic</a></td>
+<td>Characteristic measured, such as size, volume, surface, or sugar concentratio...</td>
+</tr>
+<tr>
+<td><a href="traitCharacteristicAccessionNumber/">traitCharacteristicAccessionNumber</a></td>
+<td>Accession number of the trait characteristic in a suitable controlled vocabul...</td>
+</tr>
+<tr>
+<td><a href="traitEntity/">traitEntity</a></td>
+<td>Entity on which the trait has been measured</td>
+</tr>
+<tr>
+<td><a href="traitEntityAccessionNumber/">traitEntityAccessionNumber</a></td>
+<td>Accession number of the trait entity in a suitable controlled vocabulary</td>
+</tr>
+<tr>
+<td><a href="traitName/">traitName</a></td>
+<td>Name of the plant or environmental trait under observation</td>
+</tr>
+<tr>
+<td><a href="variableAccNumber/">variableAccNumber</a></td>
+<td>Accession number of the variable in the Crop Ontology</td>
+</tr>
+<tr>
+<td><a href="variableId/">variableId</a></td>
+<td>Code used to identify the variable in the data file</td>
+</tr>
+<tr>
+<td><a href="variableName/">variableName</a></td>
+<td>Name of the variable</td>
 </tr>
 </tbody>
 </table>
@@ -626,8 +1058,8 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="PersonStatus/">PersonStatus</a></td>
-<td>The vital status of a person</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -677,12 +1109,24 @@
 <td>An integer</td>
 </tr>
 <tr>
+<td><a href="Iso8601DateTime/">Iso8601DateTime</a></td>
+<td>ISO 8601 date or date-time, with optional timezone</td>
+</tr>
+<tr>
 <td><a href="Jsonpath/">Jsonpath</a></td>
 <td>A string encoding a JSON Path</td>
 </tr>
 <tr>
 <td><a href="Jsonpointer/">Jsonpointer</a></td>
 <td>A string encoding a JSON Pointer</td>
+</tr>
+<tr>
+<td><a href="KeyValueList/">KeyValueList</a></td>
+<td>Key-value pair list encoded as text, usually separated by commas or semicolon...</td>
+</tr>
+<tr>
+<td><a href="MeasurementWithUnit/">MeasurementWithUnit</a></td>
+<td>Numeric value followed by a unit abbreviation, as used in the MIAPPE checklis...</td>
 </tr>
 <tr>
 <td><a href="Ncname/">Ncname</a></td>
