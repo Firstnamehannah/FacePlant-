@@ -25,7 +25,7 @@ prefixes:
     prefix_reference: https://w3id.org/linkml/
   faceplant:
     prefix_prefix: faceplant
-    prefix_reference: https://w3id.org/your-org/faceplant/
+    prefix_reference: https://github.com/Firstnamehannah/FacePlant-
   miappe:
     prefix_prefix: miappe
     prefix_reference: https://w3id.org/miappe/
@@ -67,7 +67,7 @@ default_range: string
 types:
   iso8601DateTime:
     name: iso8601DateTime
-    definition_uri: https://w3id.org/your-org/faceplant/Iso8601DateTime
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Iso8601DateTime
     description: ISO 8601 date or date-time, with optional timezone.
     from_schema: https://w3id.org/your-org/faceplant
     typeof: string
@@ -76,7 +76,7 @@ types:
     pattern: ^\d{4}-\d{2}-\d{2}([Tt ][0-9:.+-]+(Z|[+-][0-9]{2}:[0-9]{2})?)?$
   measurementWithUnit:
     name: measurementWithUnit
-    definition_uri: https://w3id.org/your-org/faceplant/MeasurementWithUnit
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-MeasurementWithUnit
     description: Numeric value followed by a unit abbreviation, as used in the MIAPPE
       checklist.
     from_schema: https://w3id.org/your-org/faceplant
@@ -85,7 +85,7 @@ types:
     uri: xsd:string
   keyValueList:
     name: keyValueList
-    definition_uri: https://w3id.org/your-org/faceplant/KeyValueList
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-KeyValueList
     description: Key-value pair list encoded as text, usually separated by commas
       or semicolons.
     from_schema: https://w3id.org/your-org/faceplant
@@ -363,7 +363,7 @@ types:
 slots:
   investigation:
     name: investigation
-    definition_uri: https://w3id.org/your-org/faceplant/investigation
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigation
     description: The single investigation represented by a MIAPPE submission.
     from_schema: https://w3id.org/your-org/faceplant
     slot_uri: faceplant:investigation
@@ -376,7 +376,7 @@ slots:
     inlined_as_list: true
   studies:
     name: studies
-    definition_uri: https://w3id.org/your-org/faceplant/studies
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studies
     description: Studies belonging to an investigation.
     from_schema: https://w3id.org/your-org/faceplant
     slot_uri: faceplant:studies
@@ -389,7 +389,7 @@ slots:
     inlined_as_list: true
   persons:
     name: persons
-    definition_uri: https://w3id.org/your-org/faceplant/persons
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-persons
     description: People associated with an investigation or study.
     from_schema: https://w3id.org/your-org/faceplant
     slot_uri: faceplant:persons
@@ -403,7 +403,7 @@ slots:
     inlined_as_list: true
   dataFiles:
     name: dataFiles
-    definition_uri: https://w3id.org/your-org/faceplant/dataFiles
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFiles
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -420,7 +420,7 @@ slots:
     inlined_as_list: true
   biologicalMaterials:
     name: biologicalMaterials
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterials
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterials
     description: Biological materials associated with a study.
     from_schema: https://w3id.org/your-org/faceplant
     slot_uri: faceplant:biologicalMaterials
@@ -433,7 +433,7 @@ slots:
     inlined_as_list: true
   biologicalMaterialRefs:
     name: biologicalMaterialRefs
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialRefs
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialRefs
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -451,7 +451,7 @@ slots:
     multivalued: true
   environment:
     name: environment
-    definition_uri: https://w3id.org/your-org/faceplant/environment
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-environment
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -467,7 +467,7 @@ slots:
     inlined_as_list: true
   environmentParameters:
     name: environmentParameters
-    definition_uri: https://w3id.org/your-org/faceplant/environmentParameters
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-environmentParameters
     description: Constant environmental parameter values for a study.
     from_schema: https://w3id.org/your-org/faceplant
     slot_uri: faceplant:environmentParameters
@@ -481,7 +481,7 @@ slots:
     inlined_as_list: true
   experimentalFactors:
     name: experimentalFactors
-    definition_uri: https://w3id.org/your-org/faceplant/experimentalFactors
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-experimentalFactors
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -498,7 +498,7 @@ slots:
     inlined_as_list: true
   events:
     name: events
-    definition_uri: https://w3id.org/your-org/faceplant/events
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-events
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -516,7 +516,7 @@ slots:
     inlined_as_list: true
   observationUnits:
     name: observationUnits
-    definition_uri: https://w3id.org/your-org/faceplant/observationUnits
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observationUnits
     description: Observation units associated with a study.
     from_schema: https://w3id.org/your-org/faceplant
     slot_uri: faceplant:observationUnits
@@ -529,7 +529,7 @@ slots:
     inlined_as_list: true
   samples:
     name: samples
-    definition_uri: https://w3id.org/your-org/faceplant/samples
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-samples
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -546,7 +546,7 @@ slots:
     inlined_as_list: true
   observedVariables:
     name: observedVariables
-    definition_uri: https://w3id.org/your-org/faceplant/observedVariables
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observedVariables
     description: Observed variables associated with a study.
     from_schema: https://w3id.org/your-org/faceplant
     slot_uri: faceplant:observedVariables
@@ -559,7 +559,7 @@ slots:
     inlined_as_list: true
   investigationId:
     name: investigationId
-    definition_uri: https://w3id.org/your-org/faceplant/investigationId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigationId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -582,7 +582,7 @@ slots:
     range: uriorcurie
   investigationTitle:
     name: investigationTitle
-    definition_uri: https://w3id.org/your-org/faceplant/investigationTitle
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigationTitle
     annotations:
       miappe_label:
         tag: miappe_label
@@ -603,7 +603,7 @@ slots:
     required: true
   investigationDescription:
     name: investigationDescription
-    definition_uri: https://w3id.org/your-org/faceplant/investigationDescription
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigationDescription
     annotations:
       miappe_label:
         tag: miappe_label
@@ -623,7 +623,7 @@ slots:
     range: string
   submissionDate:
     name: submissionDate
-    definition_uri: https://w3id.org/your-org/faceplant/submissionDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-submissionDate
     annotations:
       miappe_label:
         tag: miappe_label
@@ -643,7 +643,7 @@ slots:
     range: iso8601DateTime
   publicReleaseDate:
     name: publicReleaseDate
-    definition_uri: https://w3id.org/your-org/faceplant/publicReleaseDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-publicReleaseDate
     annotations:
       miappe_label:
         tag: miappe_label
@@ -663,7 +663,7 @@ slots:
     range: iso8601DateTime
   license:
     name: license
-    definition_uri: https://w3id.org/your-org/faceplant/license
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-license
     annotations:
       miappe_label:
         tag: miappe_label
@@ -683,7 +683,7 @@ slots:
     range: string
   miappeVersion:
     name: miappeVersion
-    definition_uri: https://w3id.org/your-org/faceplant/miappeVersion
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-miappeVersion
     annotations:
       miappe_label:
         tag: miappe_label
@@ -704,7 +704,7 @@ slots:
     required: true
   associatedPublication:
     name: associatedPublication
-    definition_uri: https://w3id.org/your-org/faceplant/associatedPublication
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-associatedPublication
     annotations:
       miappe_label:
         tag: miappe_label
@@ -726,7 +726,7 @@ slots:
     multivalued: true
   studyId:
     name: studyId
-    definition_uri: https://w3id.org/your-org/faceplant/studyId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -749,7 +749,7 @@ slots:
     range: uriorcurie
   studyTitle:
     name: studyTitle
-    definition_uri: https://w3id.org/your-org/faceplant/studyTitle
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyTitle
     annotations:
       miappe_label:
         tag: miappe_label
@@ -770,7 +770,7 @@ slots:
     required: true
   studyDescription:
     name: studyDescription
-    definition_uri: https://w3id.org/your-org/faceplant/studyDescription
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyDescription
     annotations:
       miappe_label:
         tag: miappe_label
@@ -790,7 +790,7 @@ slots:
     range: string
   studyStartDate:
     name: studyStartDate
-    definition_uri: https://w3id.org/your-org/faceplant/studyStartDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyStartDate
     annotations:
       miappe_label:
         tag: miappe_label
@@ -811,7 +811,7 @@ slots:
     required: true
   studyEndDate:
     name: studyEndDate
-    definition_uri: https://w3id.org/your-org/faceplant/studyEndDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyEndDate
     annotations:
       miappe_label:
         tag: miappe_label
@@ -831,7 +831,7 @@ slots:
     range: iso8601DateTime
   contactInst:
     name: contactInst
-    definition_uri: https://w3id.org/your-org/faceplant/contactInst
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-contactInst
     annotations:
       miappe_label:
         tag: miappe_label
@@ -852,7 +852,7 @@ slots:
     required: true
   locationCountry:
     name: locationCountry
-    definition_uri: https://w3id.org/your-org/faceplant/locationCountry
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationCountry
     annotations:
       miappe_label:
         tag: miappe_label
@@ -876,7 +876,7 @@ slots:
     required: true
   siteName:
     name: siteName
-    definition_uri: https://w3id.org/your-org/faceplant/siteName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-siteName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -900,7 +900,7 @@ slots:
     required: true
   locationLatitude:
     name: locationLatitude
-    definition_uri: https://w3id.org/your-org/faceplant/locationLatitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationLatitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -922,7 +922,7 @@ slots:
     maximum_value: 90
   locationLongitude:
     name: locationLongitude
-    definition_uri: https://w3id.org/your-org/faceplant/locationLongitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationLongitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -944,7 +944,7 @@ slots:
     maximum_value: 180
   locationAltitude:
     name: locationAltitude
-    definition_uri: https://w3id.org/your-org/faceplant/locationAltitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationAltitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -964,7 +964,7 @@ slots:
     range: measurementWithUnit
   expeDesignDesc:
     name: expeDesignDesc
-    definition_uri: https://w3id.org/your-org/faceplant/expeDesignDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeDesignDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -986,7 +986,7 @@ slots:
     required: true
   expeDesignType:
     name: expeDesignType
-    definition_uri: https://w3id.org/your-org/faceplant/expeDesignType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeDesignType
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1007,7 +1007,7 @@ slots:
     range: uriorcurie
   obsUnitLevelHierarchy:
     name: obsUnitLevelHierarchy
-    definition_uri: https://w3id.org/your-org/faceplant/obsUnitLevelHierarchy
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitLevelHierarchy
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1027,7 +1027,7 @@ slots:
     range: string
   obsUnitDesc:
     name: obsUnitDesc
-    definition_uri: https://w3id.org/your-org/faceplant/obsUnitDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1048,7 +1048,7 @@ slots:
     required: true
   growthFacilityDesc:
     name: growthFacilityDesc
-    definition_uri: https://w3id.org/your-org/faceplant/growthFacilityDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-growthFacilityDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1070,7 +1070,7 @@ slots:
     required: true
   growthFacilityType:
     name: growthFacilityType
-    definition_uri: https://w3id.org/your-org/faceplant/growthFacilityType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-growthFacilityType
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1090,7 +1090,7 @@ slots:
     range: uriorcurie
   culturalPractice:
     name: culturalPractice
-    definition_uri: https://w3id.org/your-org/faceplant/culturalPractice
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-culturalPractice
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1110,7 +1110,7 @@ slots:
     range: string
   expeDesignMap:
     name: expeDesignMap
-    definition_uri: https://w3id.org/your-org/faceplant/expeDesignMap
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeDesignMap
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1131,7 +1131,7 @@ slots:
     multivalued: true
   personName:
     name: personName
-    definition_uri: https://w3id.org/your-org/faceplant/personName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1152,7 +1152,7 @@ slots:
     required: true
   personEmail:
     name: personEmail
-    definition_uri: https://w3id.org/your-org/faceplant/personEmail
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personEmail
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1173,7 +1173,7 @@ slots:
     pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
   personId:
     name: personId
-    definition_uri: https://w3id.org/your-org/faceplant/personId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1194,7 +1194,7 @@ slots:
     range: uriorcurie
   personRole:
     name: personRole
-    definition_uri: https://w3id.org/your-org/faceplant/personRole
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personRole
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1216,7 +1216,7 @@ slots:
     multivalued: true
   personAffiliation:
     name: personAffiliation
-    definition_uri: https://w3id.org/your-org/faceplant/personAffiliation
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personAffiliation
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1238,7 +1238,7 @@ slots:
     multivalued: true
   dataFileLink:
     name: dataFileLink
-    definition_uri: https://w3id.org/your-org/faceplant/dataFileLink
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFileLink
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1260,7 +1260,7 @@ slots:
     required: true
   dataFileDesc:
     name: dataFileDesc
-    definition_uri: https://w3id.org/your-org/faceplant/dataFileDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFileDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1281,7 +1281,7 @@ slots:
     required: true
   dataFileVersion:
     name: dataFileVersion
-    definition_uri: https://w3id.org/your-org/faceplant/dataFileVersion
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFileVersion
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1301,7 +1301,7 @@ slots:
     range: string
   biologicalMaterialId:
     name: biologicalMaterialId
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1326,7 +1326,7 @@ slots:
     required: true
   biologicalMaterialExtId:
     name: biologicalMaterialExtId
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialExtId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialExtId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1347,7 +1347,7 @@ slots:
     multivalued: true
   organism:
     name: organism
-    definition_uri: https://w3id.org/your-org/faceplant/organism
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-organism
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1368,7 +1368,7 @@ slots:
     required: true
   genus:
     name: genus
-    definition_uri: https://w3id.org/your-org/faceplant/genus
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-genus
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1388,7 +1388,7 @@ slots:
     range: string
   species:
     name: species
-    definition_uri: https://w3id.org/your-org/faceplant/species
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-species
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1408,7 +1408,7 @@ slots:
     range: string
   infraspecificName:
     name: infraspecificName
-    definition_uri: https://w3id.org/your-org/faceplant/infraspecificName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-infraspecificName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1429,7 +1429,7 @@ slots:
     range: keyValueList
   biologicalMaterialLatitude:
     name: biologicalMaterialLatitude
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialLatitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialLatitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1451,7 +1451,7 @@ slots:
     maximum_value: 90
   biologicalMaterialLongitude:
     name: biologicalMaterialLongitude
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialLongitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialLongitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1473,7 +1473,7 @@ slots:
     maximum_value: 180
   biologicalMaterialAltitude:
     name: biologicalMaterialAltitude
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialAltitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialAltitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1493,7 +1493,7 @@ slots:
     range: measurementWithUnit
   biologicalMaterialCoordUncertainty:
     name: biologicalMaterialCoordUncertainty
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialCoordUncertainty
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialCoordUncertainty
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1513,7 +1513,7 @@ slots:
     range: measurementWithUnit
   biologicalMaterialPreprocessing:
     name: biologicalMaterialPreprocessing
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterialPreprocessing
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialPreprocessing
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1537,7 +1537,7 @@ slots:
     multivalued: true
   materialSourceId:
     name: materialSourceId
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1560,7 +1560,7 @@ slots:
     range: string
   materialSourceDoi:
     name: materialSourceDoi
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceDoi
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceDoi
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1580,7 +1580,7 @@ slots:
     range: uriorcurie
   materialSourceAccNumber:
     name: materialSourceAccNumber
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceAccNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1600,7 +1600,7 @@ slots:
     range: string
   materialSourceAccName:
     name: materialSourceAccName
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceAccName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceAccName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1621,7 +1621,7 @@ slots:
     range: string
   materialSourceInstCode:
     name: materialSourceInstCode
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceInstCode
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceInstCode
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1641,7 +1641,7 @@ slots:
     range: string
   materialSourceInstName:
     name: materialSourceInstName
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceInstName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceInstName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1661,7 +1661,7 @@ slots:
     range: string
   materialSourceOtherIds:
     name: materialSourceOtherIds
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceOtherIds
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceOtherIds
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1682,7 +1682,7 @@ slots:
     range: keyValueList
   materialSourceLatitude:
     name: materialSourceLatitude
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceLatitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceLatitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1704,7 +1704,7 @@ slots:
     maximum_value: 90
   materialSourceLongitude:
     name: materialSourceLongitude
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceLongitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceLongitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1726,7 +1726,7 @@ slots:
     maximum_value: 180
   materialSourceAltitude:
     name: materialSourceAltitude
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceAltitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceAltitude
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1746,7 +1746,7 @@ slots:
     range: measurementWithUnit
   materialSourceCoordUncertainty:
     name: materialSourceCoordUncertainty
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceCoordUncertainty
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceCoordUncertainty
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1766,7 +1766,7 @@ slots:
     range: measurementWithUnit
   materialSourceDesc:
     name: materialSourceDesc
-    definition_uri: https://w3id.org/your-org/faceplant/materialSourceDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1786,7 +1786,7 @@ slots:
     range: string
   envParam:
     name: envParam
-    definition_uri: https://w3id.org/your-org/faceplant/envParam
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-envParam
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1807,7 +1807,7 @@ slots:
     required: true
   envParamValue:
     name: envParamValue
-    definition_uri: https://w3id.org/your-org/faceplant/envParamValue
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-envParamValue
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1828,7 +1828,7 @@ slots:
     required: true
   expeFactorType:
     name: expeFactorType
-    definition_uri: https://w3id.org/your-org/faceplant/expeFactorType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeFactorType
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1849,7 +1849,7 @@ slots:
     required: true
   expeFactorDesc:
     name: expeFactorDesc
-    definition_uri: https://w3id.org/your-org/faceplant/expeFactorDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeFactorDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1872,7 +1872,7 @@ slots:
     range: string
   expeFactorValues:
     name: expeFactorValues
-    definition_uri: https://w3id.org/your-org/faceplant/expeFactorValues
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeFactorValues
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1894,7 +1894,7 @@ slots:
     multivalued: true
   eventType:
     name: eventType
-    definition_uri: https://w3id.org/your-org/faceplant/eventType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventType
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1915,7 +1915,7 @@ slots:
     required: true
   eventAccNumber:
     name: eventAccNumber
-    definition_uri: https://w3id.org/your-org/faceplant/eventAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventAccNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1935,7 +1935,7 @@ slots:
     range: uriorcurie
   eventDesc:
     name: eventDesc
-    definition_uri: https://w3id.org/your-org/faceplant/eventDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1955,7 +1955,7 @@ slots:
     range: string
   eventDate:
     name: eventDate
-    definition_uri: https://w3id.org/your-org/faceplant/eventDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventDate
     annotations:
       miappe_label:
         tag: miappe_label
@@ -1977,7 +1977,7 @@ slots:
     multivalued: true
   obsUnitId:
     name: obsUnitId
-    definition_uri: https://w3id.org/your-org/faceplant/obsUnitId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2002,7 +2002,7 @@ slots:
     required: true
   obsUnitType:
     name: obsUnitType
-    definition_uri: https://w3id.org/your-org/faceplant/obsUnitType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitType
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2026,7 +2026,7 @@ slots:
     required: true
   externalId:
     name: externalId
-    definition_uri: https://w3id.org/your-org/faceplant/externalId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-externalId
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -2045,7 +2045,7 @@ slots:
     multivalued: true
   spatialDistribution:
     name: spatialDistribution
-    definition_uri: https://w3id.org/your-org/faceplant/spatialDistribution
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-spatialDistribution
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2069,7 +2069,7 @@ slots:
     multivalued: true
   obsUnitFactorValue:
     name: obsUnitFactorValue
-    definition_uri: https://w3id.org/your-org/faceplant/obsUnitFactorValue
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitFactorValue
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2090,7 +2090,7 @@ slots:
     multivalued: true
   sampleId:
     name: sampleId
-    definition_uri: https://w3id.org/your-org/faceplant/sampleId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-sampleId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2112,7 +2112,7 @@ slots:
     required: true
   developmentStage:
     name: developmentStage
-    definition_uri: https://w3id.org/your-org/faceplant/developmentStage
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-developmentStage
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2135,7 +2135,7 @@ slots:
     range: uriorcurie
   anatomicalEntity:
     name: anatomicalEntity
-    definition_uri: https://w3id.org/your-org/faceplant/anatomicalEntity
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-anatomicalEntity
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2159,7 +2159,7 @@ slots:
     required: true
   sampleDesc:
     name: sampleDesc
-    definition_uri: https://w3id.org/your-org/faceplant/sampleDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-sampleDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2182,7 +2182,7 @@ slots:
     range: string
   collectionDate:
     name: collectionDate
-    definition_uri: https://w3id.org/your-org/faceplant/collectionDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-collectionDate
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2203,7 +2203,7 @@ slots:
     required: true
   variableId:
     name: variableId
-    definition_uri: https://w3id.org/your-org/faceplant/variableId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-variableId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2228,7 +2228,7 @@ slots:
     required: true
   variableName:
     name: variableName
-    definition_uri: https://w3id.org/your-org/faceplant/variableName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-variableName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2248,7 +2248,7 @@ slots:
     range: string
   variableAccNumber:
     name: variableAccNumber
-    definition_uri: https://w3id.org/your-org/faceplant/variableAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-variableAccNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2268,7 +2268,7 @@ slots:
     range: uriorcurie
   traitName:
     name: traitName
-    definition_uri: https://w3id.org/your-org/faceplant/traitName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2289,7 +2289,7 @@ slots:
     required: true
   traitEntity:
     name: traitEntity
-    definition_uri: https://w3id.org/your-org/faceplant/traitEntity
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitEntity
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2309,7 +2309,7 @@ slots:
     range: string
   traitEntityAccessionNumber:
     name: traitEntityAccessionNumber
-    definition_uri: https://w3id.org/your-org/faceplant/traitEntityAccessionNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitEntityAccessionNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2329,7 +2329,7 @@ slots:
     range: uriorcurie
   traitCharacteristic:
     name: traitCharacteristic
-    definition_uri: https://w3id.org/your-org/faceplant/traitCharacteristic
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitCharacteristic
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2350,7 +2350,7 @@ slots:
     range: string
   traitCharacteristicAccessionNumber:
     name: traitCharacteristicAccessionNumber
-    definition_uri: https://w3id.org/your-org/faceplant/traitCharacteristicAccessionNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitCharacteristicAccessionNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2371,7 +2371,7 @@ slots:
     range: uriorcurie
   traitAccNumber:
     name: traitAccNumber
-    definition_uri: https://w3id.org/your-org/faceplant/traitAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitAccNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2391,7 +2391,7 @@ slots:
     range: uriorcurie
   methodName:
     name: methodName
-    definition_uri: https://w3id.org/your-org/faceplant/methodName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2412,7 +2412,7 @@ slots:
     required: true
   methodAccNumber:
     name: methodAccNumber
-    definition_uri: https://w3id.org/your-org/faceplant/methodAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodAccNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2432,7 +2432,7 @@ slots:
     range: uriorcurie
   methodDesc:
     name: methodDesc
-    definition_uri: https://w3id.org/your-org/faceplant/methodDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodDesc
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2455,7 +2455,7 @@ slots:
     range: string
   methodRef:
     name: methodRef
-    definition_uri: https://w3id.org/your-org/faceplant/methodRef
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodRef
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2475,7 +2475,7 @@ slots:
     range: uriorcurie
   scaleName:
     name: scaleName
-    definition_uri: https://w3id.org/your-org/faceplant/scaleName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-scaleName
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2496,7 +2496,7 @@ slots:
     required: true
   scaleAccNumber:
     name: scaleAccNumber
-    definition_uri: https://w3id.org/your-org/faceplant/scaleAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-scaleAccNumber
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2516,7 +2516,7 @@ slots:
     range: uriorcurie
   timeScale:
     name: timeScale
-    definition_uri: https://w3id.org/your-org/faceplant/timeScale
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-timeScale
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2540,7 +2540,7 @@ slots:
     multivalued: true
   Investigation_persons:
     name: Investigation_persons
-    definition_uri: https://w3id.org/your-org/faceplant/persons
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-persons
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -2563,7 +2563,7 @@ slots:
     inlined_as_list: true
   Investigation_studies:
     name: Investigation_studies
-    definition_uri: https://w3id.org/your-org/faceplant/studies
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studies
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -2586,7 +2586,7 @@ slots:
     inlined_as_list: true
   Study_persons:
     name: Study_persons
-    definition_uri: https://w3id.org/your-org/faceplant/persons
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-persons
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -2609,7 +2609,7 @@ slots:
     inlined_as_list: true
   Study_biologicalMaterials:
     name: Study_biologicalMaterials
-    definition_uri: https://w3id.org/your-org/faceplant/biologicalMaterials
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterials
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -2632,7 +2632,7 @@ slots:
     inlined_as_list: true
   Study_observationUnits:
     name: Study_observationUnits
-    definition_uri: https://w3id.org/your-org/faceplant/observationUnits
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observationUnits
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -2655,7 +2655,7 @@ slots:
     inlined_as_list: true
   Study_observedVariables:
     name: Study_observedVariables
-    definition_uri: https://w3id.org/your-org/faceplant/observedVariables
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observedVariables
     annotations:
       miappe_cardinality:
         tag: miappe_cardinality
@@ -2678,7 +2678,7 @@ slots:
     inlined_as_list: true
   ObservationUnit_externalId:
     name: ObservationUnit_externalId
-    definition_uri: https://w3id.org/your-org/faceplant/externalId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-externalId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2704,7 +2704,7 @@ slots:
     multivalued: true
   Sample_externalId:
     name: Sample_externalId
-    definition_uri: https://w3id.org/your-org/faceplant/externalId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-externalId
     annotations:
       miappe_label:
         tag: miappe_label
@@ -2731,7 +2731,7 @@ slots:
 classes:
   MIAPPESubmission:
     name: MIAPPESubmission
-    definition_uri: https://w3id.org/your-org/faceplant/MIAPPESubmission
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-MIAPPESubmission
     description: A complete MIAPPE submission containing exactly one investigation.
     from_schema: https://w3id.org/your-org/faceplant
     slots:
@@ -2740,7 +2740,7 @@ classes:
     tree_root: true
   Investigation:
     name: Investigation
-    definition_uri: https://w3id.org/your-org/faceplant/Investigation
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Investigation
     description: 'Investigations are research programmes with defined aims. They can
       exist at various scales, including a grant-funded programme, a publication,
       or a single experiment.
@@ -2776,7 +2776,7 @@ classes:
     class_uri: faceplant:Investigation
   Study:
     name: Study
-    definition_uri: https://w3id.org/your-org/faceplant/Study
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Study
     description: 'A study or experiment comprises a series of assays or measurements
       of one or more types, undertaken to answer a particular biological question.
 
@@ -2842,7 +2842,7 @@ classes:
     class_uri: faceplant:Study
   Person:
     name: Person
-    definition_uri: https://w3id.org/your-org/faceplant/Person
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Person
     description: A human involved in the investigation or specifically in one of its
       studies.
     from_schema: https://w3id.org/your-org/faceplant
@@ -2855,7 +2855,7 @@ classes:
     class_uri: faceplant:Person
   DataFile:
     name: DataFile
-    definition_uri: https://w3id.org/your-org/faceplant/DataFile
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-DataFile
     description: 'A file or digital object holding observation data recorded during
       one or more assays of the study, typically in tabular form.
 
@@ -2868,7 +2868,7 @@ classes:
     class_uri: faceplant:DataFile
   BiologicalMaterial:
     name: BiologicalMaterial
-    definition_uri: https://w3id.org/your-org/faceplant/BiologicalMaterial
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-BiologicalMaterial
     description: 'The biological material being studied, such as plants grown from
       a seed bag or plants grown in a particular field.
 
@@ -2901,7 +2901,7 @@ classes:
     class_uri: faceplant:BiologicalMaterial
   Environment:
     name: Environment
-    definition_uri: https://w3id.org/your-org/faceplant/Environment
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Environment
     description: 'Environmental parameters that were kept constant throughout the
       study and did not change between observation units or assays.
 
@@ -2912,7 +2912,7 @@ classes:
     class_uri: faceplant:Environment
   EnvironmentParameter:
     name: EnvironmentParameter
-    definition_uri: https://w3id.org/your-org/faceplant/EnvironmentParameter
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-EnvironmentParameter
     description: A constant environmental parameter and its value.
     from_schema: https://w3id.org/your-org/faceplant
     slots:
@@ -2921,7 +2921,7 @@ classes:
     class_uri: faceplant:EnvironmentParameter
   ExperimentalFactor:
     name: ExperimentalFactor
-    definition_uri: https://w3id.org/your-org/faceplant/ExperimentalFactor
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-ExperimentalFactor
     description: 'A condition that varies between observation units and whose impact
       on the biological material is the object of a study.
 
@@ -2934,7 +2934,7 @@ classes:
     class_uri: faceplant:ExperimentalFactor
   Event:
     name: Event
-    definition_uri: https://w3id.org/your-org/faceplant/Event
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Event
     description: 'A discrete occurrence at a particular time in the experiment, natural
       or unnatural, such as planting, rain, fertilizing, or watering.
 
@@ -2948,7 +2948,7 @@ classes:
     class_uri: faceplant:Event
   ObservationUnit:
     name: ObservationUnit
-    definition_uri: https://w3id.org/your-org/faceplant/ObservationUnit
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-ObservationUnit
     description: 'Objects that are subject to instances of observation and measurement.
       Observation units may comprise plants, their environment, or pure environmental
       observation units.
@@ -2981,7 +2981,7 @@ classes:
     class_uri: faceplant:ObservationUnit
   Sample:
     name: Sample
-    definition_uri: https://w3id.org/your-org/faceplant/Sample
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Sample
     description: 'A portion of plant tissue harvested, non-harvested, or extracted
       from an observation unit for sub-plant observations and/or molecular studies.
 
@@ -3011,7 +3011,7 @@ classes:
     class_uri: faceplant:Sample
   ObservedVariable:
     name: ObservedVariable
-    definition_uri: https://w3id.org/your-org/faceplant/ObservedVariable
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-ObservedVariable
     description: 'Description of how a measurement has been made, usually a trait
       associated with a method and a unit or scale of measurement.
 
@@ -3037,7 +3037,7 @@ classes:
     class_uri: faceplant:ObservedVariable
 metamodel_version: 1.11.0
 source_file: faceplant.yaml
-source_file_date: '2026-07-21T13:32:27'
-source_file_size: 39694
-generation_date: '2026-07-21T13:36:37'
+source_file_date: '2026-07-21T13:39:37'
+source_file_size: 39703
+generation_date: '2026-07-21T13:40:12'
 

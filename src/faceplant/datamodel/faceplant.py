@@ -1,5 +1,5 @@
 # Auto generated from faceplant.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-07-21T13:34:29
+# Generation date: 2026-07-21T13:40:26
 # Schema: faceplant
 #
 # id: https://w3id.org/your-org/faceplant
@@ -74,7 +74,7 @@ ORCID = CurieNamespace('ORCID', 'http://identifiers.org/orcid/')
 PATO = CurieNamespace('PATO', 'http://purl.obolibrary.org/obo/PATO_')
 PO = CurieNamespace('PO', 'http://purl.obolibrary.org/obo/PO_')
 TO = CurieNamespace('TO', 'http://purl.obolibrary.org/obo/TO_')
-FACEPLANT = CurieNamespace('faceplant', 'https://w3id.org/your-org/faceplant/')
+FACEPLANT = CurieNamespace('faceplant', 'https://github.com/Firstnamehannah/FacePlant-')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 MIAPPE = CurieNamespace('miappe', 'https://w3id.org/miappe/')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
