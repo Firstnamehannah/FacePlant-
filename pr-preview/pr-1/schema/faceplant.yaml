@@ -1,0 +1,3043 @@
+name: faceplant
+annotations:
+  source:
+    tag: source
+    value: Derived from the MIAPPE LinkML schema (https://github.com/lakehouse-code/datamodel/blob/main/miappe.yaml),
+      itself generated from MIAPPE_Checklist_Data_Model.tsv in the MIAPPE/MIAPPE GitHub
+      repository.
+  source_version:
+    tag: source_version
+    value: MIAPPE 1.2
+description: 'A LinkML data model for plant phenotypic data, based on the Minimum
+  Information About a Plant Phenotyping Experiment (MIAPPE v1.2) checklist. Slot names
+  follow the original MIAPPE codenames for traceability.
+
+  '
+title: 'FacePlant: a plant phenotypic data model'
+id: https://w3id.org/your-org/faceplant
+version: 0.1.0
+imports:
+- linkml:types
+license: https://creativecommons.org/licenses/by/4.0/
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+  faceplant:
+    prefix_prefix: faceplant
+    prefix_reference: https://github.com/Firstnamehannah/FacePlant-
+  miappe:
+    prefix_prefix: miappe
+    prefix_reference: https://w3id.org/miappe/
+  schema:
+    prefix_prefix: schema
+    prefix_reference: http://schema.org/
+  ORCID:
+    prefix_prefix: ORCID
+    prefix_reference: http://identifiers.org/orcid/
+  DOI:
+    prefix_prefix: DOI
+    prefix_reference: http://identifiers.org/doi/
+  NCBITaxon:
+    prefix_prefix: NCBITaxon
+    prefix_reference: http://purl.obolibrary.org/obo/NCBITaxon_
+  CO:
+    prefix_prefix: CO
+    prefix_reference: http://purl.obolibrary.org/obo/CO_
+  CO_322:
+    prefix_prefix: CO_322
+    prefix_reference: 'https://cropontology.org/rdf/CO_322:'
+  CO_715:
+    prefix_prefix: CO_715
+    prefix_reference: http://purl.obolibrary.org/obo/CO_715_
+  PO:
+    prefix_prefix: PO
+    prefix_reference: http://purl.obolibrary.org/obo/PO_
+  PATO:
+    prefix_prefix: PATO
+    prefix_reference: http://purl.obolibrary.org/obo/PATO_
+  TO:
+    prefix_prefix: TO
+    prefix_reference: http://purl.obolibrary.org/obo/TO_
+  EO:
+    prefix_prefix: EO
+    prefix_reference: http://purl.obolibrary.org/obo/EO_
+default_prefix: faceplant
+default_range: string
+types:
+  iso8601DateTime:
+    name: iso8601DateTime
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Iso8601DateTime
+    description: ISO 8601 date or date-time, with optional timezone.
+    from_schema: https://w3id.org/your-org/faceplant
+    typeof: string
+    base: str
+    uri: xsd:string
+    pattern: ^\d{4}-\d{2}-\d{2}([Tt ][0-9:.+-]+(Z|[+-][0-9]{2}:[0-9]{2})?)?$
+  measurementWithUnit:
+    name: measurementWithUnit
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-MeasurementWithUnit
+    description: Numeric value followed by a unit abbreviation, as used in the MIAPPE
+      checklist.
+    from_schema: https://w3id.org/your-org/faceplant
+    typeof: string
+    base: str
+    uri: xsd:string
+  keyValueList:
+    name: keyValueList
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-KeyValueList
+    description: Key-value pair list encoded as text, usually separated by commas
+      or semicolons.
+    from_schema: https://w3id.org/your-org/faceplant
+    typeof: string
+    base: str
+    uri: xsd:string
+  string:
+    name: string
+    definition_uri: https://w3id.org/linkml/String
+    description: A character string
+    notes:
+    - In RDF serializations, a slot with range of string is treated as a literal or
+      type xsd:string. If you are authoring schemas in LinkML YAML, the type is referenced
+      with the lower case "string".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Text
+    base: str
+    uri: xsd:string
+  integer:
+    name: integer
+    definition_uri: https://w3id.org/linkml/Integer
+    description: An integer
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "integer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Integer
+    base: int
+    uri: xsd:integer
+  boolean:
+    name: boolean
+    definition_uri: https://w3id.org/linkml/Boolean
+    description: A binary (true or false) value
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "boolean".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Boolean
+    base: Bool
+    uri: xsd:boolean
+    repr: bool
+  float:
+    name: float
+    definition_uri: https://w3id.org/linkml/Float
+    description: A real number that conforms to the xsd:float specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "float".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:float
+  double:
+    name: double
+    definition_uri: https://w3id.org/linkml/Double
+    description: A real number that conforms to the xsd:double specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "double".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:double
+  decimal:
+    name: decimal
+    definition_uri: https://w3id.org/linkml/Decimal
+    description: A real number with arbitrary precision that conforms to the xsd:decimal
+      specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "decimal".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    broad_mappings:
+    - schema:Number
+    base: Decimal
+    uri: xsd:decimal
+  time:
+    name: time
+    definition_uri: https://w3id.org/linkml/Time
+    description: A time object represents a (local) time of day, independent of any
+      particular day
+    notes:
+    - URI is dateTime because OWL reasoners do not work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "time".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Time
+    base: XSDTime
+    uri: xsd:time
+    repr: str
+  date:
+    name: date
+    definition_uri: https://w3id.org/linkml/Date
+    description: a date (year, month and day) in an idealized calendar
+    notes:
+    - URI is dateTime because OWL reasoners don't work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Date
+    base: XSDDate
+    uri: xsd:date
+    repr: str
+  datetime:
+    name: datetime
+    definition_uri: https://w3id.org/linkml/Datetime
+    description: The combination of a date and time
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:DateTime
+    base: XSDDateTime
+    uri: xsd:dateTime
+    repr: str
+  date_or_datetime:
+    name: date_or_datetime
+    definition_uri: https://w3id.org/linkml/DateOrDatetime
+    description: Either a date or a datetime
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date_or_datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: linkml:DateOrDatetime
+    repr: str
+  uriorcurie:
+    name: uriorcurie
+    definition_uri: https://w3id.org/linkml/Uriorcurie
+    description: a URI or a CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uriorcurie".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: URIorCURIE
+    uri: xsd:anyURI
+    repr: str
+  curie:
+    name: curie
+    definition_uri: https://w3id.org/linkml/Curie
+    conforms_to: https://www.w3.org/TR/curie/
+    description: a compact URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "curie".
+    comments:
+    - in RDF serializations this MUST be expanded to a URI
+    - in non-RDF serializations MAY be serialized as the compact representation
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: Curie
+    uri: xsd:string
+    repr: str
+  uri:
+    name: uri
+    definition_uri: https://w3id.org/linkml/Uri
+    conforms_to: https://www.ietf.org/rfc/rfc3987.txt
+    description: a complete URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uri".
+    comments:
+    - in RDF serializations a slot with range of uri is treated as a literal or type
+      xsd:anyURI unless it is an identifier or a reference to an identifier, in which
+      case it is translated directly to a node
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:URL
+    base: URI
+    uri: xsd:anyURI
+    repr: str
+  ncname:
+    name: ncname
+    definition_uri: https://w3id.org/linkml/Ncname
+    description: Prefix part of CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "ncname".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NCName
+    uri: xsd:string
+    repr: str
+  objectidentifier:
+    name: objectidentifier
+    definition_uri: https://w3id.org/linkml/Objectidentifier
+    description: A URI or CURIE that represents an object in the model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "objectidentifier".
+    comments:
+    - Used for inheritance and type checking
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: ElementIdentifier
+    uri: shex:iri
+    repr: str
+  nodeidentifier:
+    name: nodeidentifier
+    definition_uri: https://w3id.org/linkml/Nodeidentifier
+    description: A URI, CURIE or BNODE that represents a node in a model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "nodeidentifier".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NodeIdentifier
+    uri: shex:nonLiteral
+    repr: str
+  jsonpointer:
+    name: jsonpointer
+    definition_uri: https://w3id.org/linkml/Jsonpointer
+    conforms_to: https://datatracker.ietf.org/doc/html/rfc6901
+    description: A string encoding a JSON Pointer. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to a valid object within the current
+      instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpointer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  jsonpath:
+    name: jsonpath
+    definition_uri: https://w3id.org/linkml/Jsonpath
+    conforms_to: https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html
+    description: A string encoding a JSON Path. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to zero or more valid objects within
+      the current instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  sparqlpath:
+    name: sparqlpath
+    definition_uri: https://w3id.org/linkml/Sparqlpath
+    conforms_to: https://www.w3.org/TR/sparql11-query/#propertypaths
+    description: A string encoding a SPARQL Property Path. The value of the string
+      MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects
+      within the current instance document when encoded as RDF.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "sparqlpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+slots:
+  investigation:
+    name: investigation
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigation
+    description: The single investigation represented by a MIAPPE submission.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:investigation
+    owner: MIAPPESubmission
+    domain_of:
+    - MIAPPESubmission
+    range: Investigation
+    required: true
+    inlined: true
+    inlined_as_list: true
+  studies:
+    name: studies
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studies
+    description: Studies belonging to an investigation.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:studies
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: Study
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  persons:
+    name: persons
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-persons
+    description: People associated with an investigation or study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:persons
+    owner: Study
+    domain_of:
+    - Investigation
+    - Study
+    range: Person
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  dataFiles:
+    name: dataFiles
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFiles
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+ per study
+    description: Data files associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:dataFiles
+    owner: Study
+    domain_of:
+    - Study
+    range: DataFile
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  biologicalMaterials:
+    name: biologicalMaterials
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterials
+    description: Biological materials associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterials
+    owner: Study
+    domain_of:
+    - Study
+    range: BiologicalMaterial
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  biologicalMaterialRefs:
+    name: biologicalMaterialRefs
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialRefs
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+ per observation unit
+    description: 'References from an observation unit to biological material identifiers
+      defined in the study-level biologicalMaterials list.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialRefs
+    owner: ObservationUnit
+    domain_of:
+    - ObservationUnit
+    range: string
+    multivalued: true
+  environment:
+    name: environment
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-environment
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1 per study
+    description: Constant environmental parameters for a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:environment
+    owner: Study
+    domain_of:
+    - Study
+    range: Environment
+    inlined: true
+    inlined_as_list: true
+  environmentParameters:
+    name: environmentParameters
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-environmentParameters
+    description: Constant environmental parameter values for a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:environmentParameters
+    owner: Environment
+    domain_of:
+    - Environment
+    range: EnvironmentParameter
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  experimentalFactors:
+    name: experimentalFactors
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-experimentalFactors
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+ per study
+    description: Experimental factors associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:experimentalFactors
+    owner: Study
+    domain_of:
+    - Study
+    range: ExperimentalFactor
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  events:
+    name: events
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-events
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+ per study or observation unit
+    description: Events associated with a study or observation unit.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:events
+    owner: ObservationUnit
+    domain_of:
+    - Study
+    - ObservationUnit
+    range: Event
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  observationUnits:
+    name: observationUnits
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observationUnits
+    description: Observation units associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:observationUnits
+    owner: Study
+    domain_of:
+    - Study
+    range: ObservationUnit
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  samples:
+    name: samples
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-samples
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+ per observation unit
+    description: Samples associated with an observation unit.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:samples
+    owner: ObservationUnit
+    domain_of:
+    - ObservationUnit
+    range: Sample
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  observedVariables:
+    name: observedVariables
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observedVariables
+    description: Observed variables associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:observedVariables
+    owner: Study
+    domain_of:
+    - Study
+    range: ObservedVariable
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  investigationId:
+    name: investigationId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigationId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Investigation unique ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: 'Identifier comprising the unique name of the institution/database
+      hosting the submission and the accession number of the investigation there.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:investigationId
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: uriorcurie
+  investigationTitle:
+    name: investigationTitle
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigationTitle
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Investigation title
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Human-readable string summarising the investigation.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:investigationTitle
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: string
+    required: true
+  investigationDescription:
+    name: investigationDescription
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-investigationDescription
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Investigation description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Human-readable text describing the investigation in more detail.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:investigationDescription
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: string
+  submissionDate:
+    name: submissionDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-submissionDate
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Submission date
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Date/Time (ISO 8601, optional time zone)
+    description: Date of submission of the dataset being described to a host repository.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:submissionDate
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: iso8601DateTime
+  publicReleaseDate:
+    name: publicReleaseDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-publicReleaseDate
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Public release date
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Date/Time (ISO 8601, optional time zone)
+    description: Date of first public release of the dataset being described.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:publicReleaseDate
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: iso8601DateTime
+  license:
+    name: license
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-license
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: License
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: License for reuse of the data associated with this investigation.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:license
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: string
+  miappeVersion:
+    name: miappeVersion
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-miappeVersion
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: MIAPPE version
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Version number
+    description: The version of MIAPPE used.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:miappeVersion
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: string
+    required: true
+  associatedPublication:
+    name: associatedPublication
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-associatedPublication
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Associated publication
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: DOI
+    description: Identifier for a literature publication where the investigation is
+      described.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:associatedPublication
+    owner: Investigation
+    domain_of:
+    - Investigation
+    range: uriorcurie
+    multivalued: true
+  studyId:
+    name: studyId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Study unique ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: 'Unique identifier comprising the name or identifier for the institution
+      or database hosting the study data and the identifier of the study there.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:studyId
+    owner: Study
+    domain_of:
+    - Study
+    range: uriorcurie
+  studyTitle:
+    name: studyTitle
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyTitle
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Study title
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Human-readable name summarising the study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:studyTitle
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    required: true
+  studyDescription:
+    name: studyDescription
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyDescription
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Study description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Human-readable text describing the study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:studyDescription
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+  studyStartDate:
+    name: studyStartDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyStartDate
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Start date of study
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Date/Time (ISO 8601, optional time zone)
+    description: Date and, if relevant, time when the experiment started.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:studyStartDate
+    owner: Study
+    domain_of:
+    - Study
+    range: iso8601DateTime
+    required: true
+  studyEndDate:
+    name: studyEndDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studyEndDate
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: End date of study
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Date/Time (ISO 8601, optional time zone)
+    description: Date and, if relevant, time when the experiment ended.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:studyEndDate
+    owner: Study
+    domain_of:
+    - Study
+    range: iso8601DateTime
+  contactInst:
+    name: contactInst
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-contactInst
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Contact institution
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Name and address of the institution responsible for the study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:contactInst
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    required: true
+  locationCountry:
+    name: locationCountry
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationCountry
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Geographic location (country)
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Country name or 2-letter code (ISO 3166)
+    description: 'Country where the experiment took place, either as a full name or
+      preferably as a 2-letter ISO 3166 country code.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:locationCountry
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    required: true
+  siteName:
+    name: siteName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-siteName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Experimental site name
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: 'Name of the natural site, experimental field, greenhouse, phenotyping
+      facility, or other site where the experiment took place.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:siteName
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    required: true
+  locationLatitude:
+    name: locationLatitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationLatitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Geographic location (latitude)
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1 (1 if longitude is provided)
+      miappe_format:
+        tag: miappe_format
+        value: Degrees in decimal format (ISO 6709)
+    description: Latitude of the experimental site in decimal degrees.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:locationLatitude
+    owner: Study
+    domain_of:
+    - Study
+    range: decimal
+    minimum_value: -90
+    maximum_value: 90
+  locationLongitude:
+    name: locationLongitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationLongitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Geographic location (longitude)
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1 (1 if latitude is provided)
+      miappe_format:
+        tag: miappe_format
+        value: Degrees in decimal format (ISO 6709)
+    description: Longitude of the experimental site in decimal degrees.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:locationLongitude
+    owner: Study
+    domain_of:
+    - Study
+    range: decimal
+    minimum_value: -180
+    maximum_value: 180
+  locationAltitude:
+    name: locationAltitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-locationAltitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Geographic location (altitude)
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Numeric + unit abbreviation
+    description: Altitude of the experimental site, provided in metres.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:locationAltitude
+    owner: Study
+    domain_of:
+    - Study
+    range: measurementWithUnit
+  expeDesignDesc:
+    name: expeDesignDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeDesignDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Description of the experimental design
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Short description of the experimental design, possibly including
+      statistical design.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:expeDesignDesc
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    required: true
+  expeDesignType:
+    name: expeDesignType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeDesignType
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Type of experimental design
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Crop Ontology term
+    description: Type of experimental design of the study, preferably as a Crop Ontology
+      accession.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:expeDesignType
+    owner: Study
+    domain_of:
+    - Study
+    range: uriorcurie
+  obsUnitLevelHierarchy:
+    name: obsUnitLevelHierarchy
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitLevelHierarchy
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Observation unit level hierarchy
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Formatted text (level>level)
+    description: Hierarchy of the different levels of repetition.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:obsUnitLevelHierarchy
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+  obsUnitDesc:
+    name: obsUnitDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Observation unit description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: General description of the observation units in the study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:obsUnitDesc
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    required: true
+  growthFacilityDesc:
+    name: growthFacilityDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-growthFacilityDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Description of growth facility
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Short description of the facility in which the study was carried
+      out.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:growthFacilityDesc
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    required: true
+  growthFacilityType:
+    name: growthFacilityType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-growthFacilityType
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Type of growth facility
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Crop Ontology term
+    description: Type of growth facility, preferably as a Crop Ontology accession.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:growthFacilityType
+    owner: Study
+    domain_of:
+    - Study
+    range: uriorcurie
+  culturalPractice:
+    name: culturalPractice
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-culturalPractice
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Cultural practices
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: General description of the cultural practices of the study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:culturalPractice
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+  expeDesignMap:
+    name: expeDesignMap
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeDesignMap
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Map of experimental design
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: URL or file name
+    description: Representation of the experimental design as a URL or file name.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:expeDesignMap
+    owner: Study
+    domain_of:
+    - Study
+    range: string
+    multivalued: true
+  personName:
+    name: personName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Person name
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Name
+    description: The person's name, either full name or as used in scientific publications.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:personName
+    owner: Person
+    domain_of:
+    - Person
+    range: string
+    required: true
+  personEmail:
+    name: personEmail
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personEmail
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Person email
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: email address
+    description: The electronic mail address of the person.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:personEmail
+    owner: Person
+    domain_of:
+    - Person
+    range: string
+    pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
+  personId:
+    name: personId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Person ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: Identifier for the data submitter or person. ORCID identifiers are
+      recommended.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:personId
+    owner: Person
+    domain_of:
+    - Person
+    range: uriorcurie
+  personRole:
+    name: personRole
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personRole
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Person role
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Type of contribution of the person to the investigation.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:personRole
+    owner: Person
+    domain_of:
+    - Person
+    range: string
+    required: true
+    multivalued: true
+  personAffiliation:
+    name: personAffiliation
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-personAffiliation
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Person affiliation
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: The institution the person belongs to.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:personAffiliation
+    owner: Person
+    domain_of:
+    - Person
+    range: string
+    required: true
+    multivalued: true
+  dataFileLink:
+    name: dataFileLink
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFileLink
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Data file link
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: URL or file name
+    description: Link to the data file or identifier of a data file submitted with
+      the MIAPPE submission.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:dataFileLink
+    owner: DataFile
+    domain_of:
+    - DataFile
+    range: string
+    required: true
+  dataFileDesc:
+    name: dataFileDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFileDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Data file description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Description of the data file format.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:dataFileDesc
+    owner: DataFile
+    domain_of:
+    - DataFile
+    range: string
+    required: true
+  dataFileVersion:
+    name: dataFileVersion
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-dataFileVersion
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Data file version
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Software version number
+    description: Version of the dataset or actual data.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:dataFileVersion
+    owner: DataFile
+    domain_of:
+    - DataFile
+    range: string
+  biologicalMaterialId:
+    name: biologicalMaterialId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Biological material ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: 'Code used to identify the biological material in the data file.
+      It should be unique within the investigation.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialId
+    identifier: true
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+    required: true
+  biologicalMaterialExtId:
+    name: biologicalMaterialExtId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialExtId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Biological material external ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: Semicolon-separated list of unique identifiers
+    description: One or more external identifiers for the biological material.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialExtId
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: uriorcurie
+    multivalued: true
+  organism:
+    name: organism
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-organism
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Organism
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: Identifier for the organism at species level. NCBI Taxon ID is recommended.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:organism
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: uriorcurie
+    required: true
+  genus:
+    name: genus
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-genus
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Genus
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Genus name
+    description: Genus name for the organism under study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:genus
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  species:
+    name: species
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-species
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Species
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Species name
+    description: Species name or specific epithet for the organism under study.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:species
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  infraspecificName:
+    name: infraspecificName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-infraspecificName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Infraspecific name
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Key-value pair list or MCPD-compliant format
+    description: Name of any subtaxa level, including variety, crossing name, cultivar,
+      or line.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:infraspecificName
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: keyValueList
+  biologicalMaterialLatitude:
+    name: biologicalMaterialLatitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialLatitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Biological material latitude
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1 (1 if longitude is provided)
+      miappe_format:
+        tag: miappe_format
+        value: Degrees in decimal format (ISO 6709)
+    description: Latitude of the studied biological material.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialLatitude
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: decimal
+    minimum_value: -90
+    maximum_value: 90
+  biologicalMaterialLongitude:
+    name: biologicalMaterialLongitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialLongitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Biological material longitude
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1 (1 if latitude is provided)
+      miappe_format:
+        tag: miappe_format
+        value: Degrees in decimal format (ISO 6709)
+    description: Longitude of the studied biological material.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialLongitude
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: decimal
+    minimum_value: -180
+    maximum_value: 180
+  biologicalMaterialAltitude:
+    name: biologicalMaterialAltitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialAltitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Biological material altitude
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Numeric + unit abbreviation
+    description: Altitude of the studied biological material, provided in meters.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialAltitude
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: measurementWithUnit
+  biologicalMaterialCoordUncertainty:
+    name: biologicalMaterialCoordUncertainty
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialCoordUncertainty
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Biological material coordinates uncertainty
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Numeric
+    description: Circular uncertainty of the coordinates, preferably provided in meters.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialCoordUncertainty
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: measurementWithUnit
+  biologicalMaterialPreprocessing:
+    name: biologicalMaterialPreprocessing
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterialPreprocessing
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Biological material preprocessing
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: Plant Environment Ontology and/or free text
+    description: 'Description of any process or treatment applied uniformly to the
+      biological material before the study itself.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:biologicalMaterialPreprocessing
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+    multivalued: true
+  materialSourceId:
+    name: materialSourceId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source ID (Holding institute/stock centre, accession)
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: 'Identifier for the source of the biological material, commonly called
+      germplasm, accession, genotype, or variety.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceId
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  materialSourceDoi:
+    name: materialSourceDoi
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceDoi
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source DOI
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: DOI
+    description: Digital Object Identifier of the material source.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceDoi
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: uriorcurie
+  materialSourceAccNumber:
+    name: materialSourceAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceAccNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: Unique identifier for accessions within a genebank or laboratory.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceAccNumber
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  materialSourceAccName:
+    name: materialSourceAccName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceAccName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source accession name
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Genebank accession registered name, other designation, or variety
+      name.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceAccName
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  materialSourceInstCode:
+    name: materialSourceInstCode
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceInstCode
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source institute code
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: FAO WIEWS code of the institute where the accession is maintained.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceInstCode
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  materialSourceInstName:
+    name: materialSourceInstName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceInstName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source institute name
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Institute name
+    description: Name of the material source institute.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceInstName
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  materialSourceOtherIds:
+    name: materialSourceOtherIds
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceOtherIds
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source other identifiers
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Key:Value pairs
+    description: Other identifiers known to exist in other collections for this material
+      source.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceOtherIds
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: keyValueList
+  materialSourceLatitude:
+    name: materialSourceLatitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceLatitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source latitude
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1 (1 if longitude is provided)
+      miappe_format:
+        tag: miappe_format
+        value: Degrees in decimal format (ISO 6709)
+    description: Latitude of the material source.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceLatitude
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: decimal
+    minimum_value: -90
+    maximum_value: 90
+  materialSourceLongitude:
+    name: materialSourceLongitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceLongitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source longitude
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1 (1 if latitude is provided)
+      miappe_format:
+        tag: miappe_format
+        value: Degrees in decimal format (ISO 6709)
+    description: Longitude of the material source.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceLongitude
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: decimal
+    minimum_value: -180
+    maximum_value: 180
+  materialSourceAltitude:
+    name: materialSourceAltitude
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceAltitude
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source altitude
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Numeric + unit abbreviation
+    description: Altitude of the material source, provided in metres.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceAltitude
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: measurementWithUnit
+  materialSourceCoordUncertainty:
+    name: materialSourceCoordUncertainty
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceCoordUncertainty
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source coordinates uncertainty
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Numeric + unit abbreviation
+    description: Circular uncertainty of the coordinates, provided in meters.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceCoordUncertainty
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: measurementWithUnit
+  materialSourceDesc:
+    name: materialSourceDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-materialSourceDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Material source description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Description of the material source.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:materialSourceDesc
+    owner: BiologicalMaterial
+    domain_of:
+    - BiologicalMaterial
+    range: string
+  envParam:
+    name: envParam
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-envParam
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Environment parameter
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Name of an environment parameter constant within the experiment.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:envParam
+    owner: EnvironmentParameter
+    domain_of:
+    - EnvironmentParameter
+    range: string
+    required: true
+  envParamValue:
+    name: envParamValue
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-envParamValue
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Environment parameter value
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1 per parameter
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Value of the environment parameter constant within the experiment.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:envParamValue
+    owner: EnvironmentParameter
+    domain_of:
+    - EnvironmentParameter
+    range: string
+    required: true
+  expeFactorType:
+    name: expeFactorType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeFactorType
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Experimental Factor type
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Name or acronym of the experimental factor.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:expeFactorType
+    owner: ExperimentalFactor
+    domain_of:
+    - ExperimentalFactor
+    range: string
+    required: true
+  expeFactorDesc:
+    name: expeFactorDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeFactorDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Experimental Factor description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: 'Free text description of the experimental factor, including relevant
+      treatment planning and protocol details.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:expeFactorDesc
+    owner: ExperimentalFactor
+    domain_of:
+    - ExperimentalFactor
+    range: string
+  expeFactorValues:
+    name: expeFactorValues
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-expeFactorValues
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Experimental Factor values
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 2+ per factor
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: List of possible values for the experimental factor.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:expeFactorValues
+    owner: ExperimentalFactor
+    domain_of:
+    - ExperimentalFactor
+    range: string
+    required: true
+    multivalued: true
+  eventType:
+    name: eventType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventType
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Event type
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text (short)
+    description: Short name of the event.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:eventType
+    owner: Event
+    domain_of:
+    - Event
+    range: string
+    required: true
+  eventAccNumber:
+    name: eventAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventAccNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Event accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Crop Ontology term
+    description: Accession number of the event type in a suitable controlled vocabulary.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:eventAccNumber
+    owner: Event
+    domain_of:
+    - Event
+    range: uriorcurie
+  eventDesc:
+    name: eventDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Event description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Description of the event, including amount applied and possibly duration.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:eventDesc
+    owner: Event
+    domain_of:
+    - Event
+    range: string
+  eventDate:
+    name: eventDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-eventDate
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Event date
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+
+      miappe_format:
+        tag: miappe_format
+        value: Date/Time (ISO 8601, optional time zone)
+    description: Date and time of the event.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:eventDate
+    owner: Event
+    domain_of:
+    - Event
+    range: iso8601DateTime
+    required: true
+    multivalued: true
+  obsUnitId:
+    name: obsUnitId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Observation unit ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: 'Identifier used to identify the observation unit in data files containing
+      values observed or measured on that unit.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:obsUnitId
+    identifier: true
+    owner: ObservationUnit
+    domain_of:
+    - ObservationUnit
+    range: string
+    required: true
+  obsUnitType:
+    name: obsUnitType
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitType
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Observation unit type
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: 'Type of observation unit in textual form, usually study, block,
+      sub-block, plot, sub-plot, pot, or plant.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:obsUnitType
+    owner: ObservationUnit
+    domain_of:
+    - ObservationUnit
+    range: string
+    required: true
+  externalId:
+    name: externalId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-externalId
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: External identifier in a persistent repository.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:externalId
+    owner: Sample
+    domain_of:
+    - ObservationUnit
+    - Sample
+    range: uriorcurie
+    multivalued: true
+  spatialDistribution:
+    name: spatialDistribution
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-spatialDistribution
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Spatial distribution
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: Formatted text (Key:value)
+    description: 'Type and value of a spatial coordinate or level of observation as
+      a key-value pair.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:spatialDistribution
+    owner: ObservationUnit
+    domain_of:
+    - ObservationUnit
+    range: keyValueList
+    multivalued: true
+  obsUnitFactorValue:
+    name: obsUnitFactorValue
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-obsUnitFactorValue
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Observation Unit factor value
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: List of values for each factor applied to the observation unit.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:obsUnitFactorValue
+    owner: ObservationUnit
+    domain_of:
+    - ObservationUnit
+    range: string
+    multivalued: true
+  sampleId:
+    name: sampleId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-sampleId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Sample ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: Unique identifier for the sample.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:sampleId
+    identifier: true
+    owner: Sample
+    domain_of:
+    - Sample
+    range: string
+    required: true
+  developmentStage:
+    name: developmentStage
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-developmentStage
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Plant structure development stage
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Plant Ontology term or BBCH scale term
+    description: 'Stage in the life of a plant structure during which the sample was
+      taken, preferably as a Plant Ontology or BBCH accession.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:developmentStage
+    owner: Sample
+    domain_of:
+    - Sample
+    range: uriorcurie
+  anatomicalEntity:
+    name: anatomicalEntity
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-anatomicalEntity
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Plant anatomical entity
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Plant Ontology term
+    description: 'Plant part or product from which the sample was taken, preferably
+      as a Plant Ontology accession.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:anatomicalEntity
+    owner: Sample
+    domain_of:
+    - Sample
+    range: uriorcurie
+    required: true
+  sampleDesc:
+    name: sampleDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-sampleDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Sample description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: 'Information not captured by other sample fields, including quantification,
+      sample treatments, and processing.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:sampleDesc
+    owner: Sample
+    domain_of:
+    - Sample
+    range: string
+  collectionDate:
+    name: collectionDate
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-collectionDate
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Collection date
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Date/Time
+    description: Date and time when the sample was collected or harvested.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:collectionDate
+    owner: Sample
+    domain_of:
+    - Sample
+    range: iso8601DateTime
+    required: true
+  variableId:
+    name: variableId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-variableId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Variable ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: 'Code used to identify the variable in the data file. It must be
+      unique within a given investigation.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:variableId
+    identifier: true
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+    required: true
+  variableName:
+    name: variableName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-variableName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Variable name
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Name of the variable.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:variableName
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+  variableAccNumber:
+    name: variableAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-variableAccNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Variable accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Crop Ontology term
+    description: Accession number of the variable in the Crop Ontology.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:variableAccNumber
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: uriorcurie
+  traitName:
+    name: traitName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Trait
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Name of the plant or environmental trait under observation.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:traitName
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+    required: true
+  traitEntity:
+    name: traitEntity
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitEntity
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Trait Entity
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Entity on which the trait has been measured.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:traitEntity
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+  traitEntityAccessionNumber:
+    name: traitEntityAccessionNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitEntityAccessionNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Trait Entity Accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Ontology term
+    description: Accession number of the trait entity in a suitable controlled vocabulary.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:traitEntityAccessionNumber
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: uriorcurie
+  traitCharacteristic:
+    name: traitCharacteristic
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitCharacteristic
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Trait Characteristic
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Characteristic measured, such as size, volume, surface, or sugar
+      concentration.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:traitCharacteristic
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+  traitCharacteristicAccessionNumber:
+    name: traitCharacteristicAccessionNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitCharacteristicAccessionNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Trait Characteristic Accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Ontology term
+    description: Accession number of the trait characteristic in a suitable controlled
+      vocabulary.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:traitCharacteristicAccessionNumber
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: uriorcurie
+  traitAccNumber:
+    name: traitAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-traitAccNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Trait accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Ontology term
+    description: Accession number of the trait in a suitable controlled vocabulary.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:traitAccNumber
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: uriorcurie
+  methodName:
+    name: methodName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Method
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: Name of the method of observation.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:methodName
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+    required: true
+  methodAccNumber:
+    name: methodAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodAccNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Method accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Ontology term
+    description: Accession number of the method in a suitable controlled vocabulary.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:methodAccNumber
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: uriorcurie
+  methodDesc:
+    name: methodDesc
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodDesc
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Method description
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: 'Textual description of the method, which may extend an externally
+      defined method with specific parameters.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:methodDesc
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+  methodRef:
+    name: methodRef
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-methodRef
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Reference associated to the method
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: URI or DOI
+    description: URI or DOI of a reference describing the method.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:methodRef
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: uriorcurie
+  scaleName:
+    name: scaleName
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-scaleName
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Scale
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: '1'
+      miappe_format:
+        tag: miappe_format
+        value: Unique identifier
+    description: Name of the scale associated with the variable.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:scaleName
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+    required: true
+  scaleAccNumber:
+    name: scaleAccNumber
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-scaleAccNumber
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Scale accession number
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0-1
+      miappe_format:
+        tag: miappe_format
+        value: Crop Ontology term
+    description: Accession number of the scale in a suitable controlled vocabulary.
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:scaleAccNumber
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: uriorcurie
+  timeScale:
+    name: timeScale
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-timeScale
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Time scale
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+      miappe_format:
+        tag: miappe_format
+        value: Free text
+    description: 'Scale or unit of time with which observations of this type were
+      recorded in the data file, for time series studies.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slot_uri: faceplant:timeScale
+    owner: ObservedVariable
+    domain_of:
+    - ObservedVariable
+    range: string
+    multivalued: true
+  Investigation_persons:
+    name: Investigation_persons
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-persons
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+ per investigation
+    description: People associated with an investigation or study.
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: persons
+    domain: Investigation
+    slot_uri: faceplant:persons
+    alias: persons
+    owner: Investigation
+    domain_of:
+    - Investigation
+    is_usage_slot: true
+    usage_slot_name: persons
+    range: Person
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  Investigation_studies:
+    name: Investigation_studies
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-studies
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+ per investigation
+    description: Studies belonging to an investigation.
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: studies
+    domain: Investigation
+    slot_uri: faceplant:studies
+    alias: studies
+    owner: Investigation
+    domain_of:
+    - Investigation
+    is_usage_slot: true
+    usage_slot_name: studies
+    range: Study
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  Study_persons:
+    name: Study_persons
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-persons
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+ per study
+    description: People associated with an investigation or study.
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: persons
+    domain: Study
+    slot_uri: faceplant:persons
+    alias: persons
+    owner: Study
+    domain_of:
+    - Study
+    is_usage_slot: true
+    usage_slot_name: persons
+    range: Person
+    required: false
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  Study_biologicalMaterials:
+    name: Study_biologicalMaterials
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-biologicalMaterials
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+ per study
+    description: Biological materials associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: biologicalMaterials
+    domain: Study
+    slot_uri: faceplant:biologicalMaterials
+    alias: biologicalMaterials
+    owner: Study
+    domain_of:
+    - Study
+    is_usage_slot: true
+    usage_slot_name: biologicalMaterials
+    range: BiologicalMaterial
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  Study_observationUnits:
+    name: Study_observationUnits
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observationUnits
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+ per study
+    description: Observation units associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: observationUnits
+    domain: Study
+    slot_uri: faceplant:observationUnits
+    alias: observationUnits
+    owner: Study
+    domain_of:
+    - Study
+    is_usage_slot: true
+    usage_slot_name: observationUnits
+    range: ObservationUnit
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  Study_observedVariables:
+    name: Study_observedVariables
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-observedVariables
+    annotations:
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 1+ per study
+    description: Observed variables associated with a study.
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: observedVariables
+    domain: Study
+    slot_uri: faceplant:observedVariables
+    alias: observedVariables
+    owner: Study
+    domain_of:
+    - Study
+    is_usage_slot: true
+    usage_slot_name: observedVariables
+    range: ObservedVariable
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  ObservationUnit_externalId:
+    name: ObservationUnit_externalId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-externalId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Observation unit external ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+    description: 'Identifier for the observation unit in a persistent repository,
+      comprising the repository name and observation unit identifier.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: externalId
+    domain: ObservationUnit
+    slot_uri: faceplant:externalId
+    alias: externalId
+    owner: ObservationUnit
+    domain_of:
+    - ObservationUnit
+    is_usage_slot: true
+    usage_slot_name: externalId
+    range: uriorcurie
+    multivalued: true
+  Sample_externalId:
+    name: Sample_externalId
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-externalId
+    annotations:
+      miappe_label:
+        tag: miappe_label
+        value: Sample external ID
+      miappe_cardinality:
+        tag: miappe_cardinality
+        value: 0+
+    description: 'Identifier for the sample in a persistent repository, comprising
+      the repository name and sample accession number.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    is_a: externalId
+    domain: Sample
+    slot_uri: faceplant:externalId
+    alias: externalId
+    owner: Sample
+    domain_of:
+    - Sample
+    is_usage_slot: true
+    usage_slot_name: externalId
+    range: uriorcurie
+    multivalued: true
+classes:
+  MIAPPESubmission:
+    name: MIAPPESubmission
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-MIAPPESubmission
+    description: A complete MIAPPE submission containing exactly one investigation.
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - investigation
+    class_uri: faceplant:MIAPPESubmission
+    tree_root: true
+  Investigation:
+    name: Investigation
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Investigation
+    description: 'Investigations are research programmes with defined aims. They can
+      exist at various scales, including a grant-funded programme, a publication,
+      or a single experiment.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - investigationId
+    - investigationTitle
+    - investigationDescription
+    - submissionDate
+    - publicReleaseDate
+    - license
+    - miappeVersion
+    - associatedPublication
+    - Investigation_persons
+    - Investigation_studies
+    slot_usage:
+      persons:
+        name: persons
+        annotations:
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 1+ per investigation
+        required: true
+      studies:
+        name: studies
+        annotations:
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 1+ per investigation
+        required: true
+    class_uri: faceplant:Investigation
+  Study:
+    name: Study
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Study
+    description: 'A study or experiment comprises a series of assays or measurements
+      of one or more types, undertaken to answer a particular biological question.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - studyId
+    - studyTitle
+    - studyDescription
+    - studyStartDate
+    - studyEndDate
+    - contactInst
+    - locationCountry
+    - siteName
+    - locationLatitude
+    - locationLongitude
+    - locationAltitude
+    - expeDesignDesc
+    - expeDesignType
+    - obsUnitLevelHierarchy
+    - obsUnitDesc
+    - growthFacilityDesc
+    - growthFacilityType
+    - culturalPractice
+    - expeDesignMap
+    - Study_persons
+    - dataFiles
+    - Study_biologicalMaterials
+    - environment
+    - experimentalFactors
+    - events
+    - Study_observationUnits
+    - Study_observedVariables
+    slot_usage:
+      persons:
+        name: persons
+        annotations:
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 0+ per study
+        required: false
+      biologicalMaterials:
+        name: biologicalMaterials
+        annotations:
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 1+ per study
+        required: true
+      observationUnits:
+        name: observationUnits
+        annotations:
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 1+ per study
+        required: true
+      observedVariables:
+        name: observedVariables
+        annotations:
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 1+ per study
+        required: true
+    class_uri: faceplant:Study
+  Person:
+    name: Person
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Person
+    description: A human involved in the investigation or specifically in one of its
+      studies.
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - personName
+    - personEmail
+    - personId
+    - personRole
+    - personAffiliation
+    class_uri: faceplant:Person
+  DataFile:
+    name: DataFile
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-DataFile
+    description: 'A file or digital object holding observation data recorded during
+      one or more assays of the study, typically in tabular form.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - dataFileLink
+    - dataFileDesc
+    - dataFileVersion
+    class_uri: faceplant:DataFile
+  BiologicalMaterial:
+    name: BiologicalMaterial
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-BiologicalMaterial
+    description: 'The biological material being studied, such as plants grown from
+      a seed bag or plants grown in a particular field.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - biologicalMaterialId
+    - biologicalMaterialExtId
+    - organism
+    - genus
+    - species
+    - infraspecificName
+    - biologicalMaterialLatitude
+    - biologicalMaterialLongitude
+    - biologicalMaterialAltitude
+    - biologicalMaterialCoordUncertainty
+    - biologicalMaterialPreprocessing
+    - materialSourceId
+    - materialSourceDoi
+    - materialSourceAccNumber
+    - materialSourceAccName
+    - materialSourceInstCode
+    - materialSourceInstName
+    - materialSourceOtherIds
+    - materialSourceLatitude
+    - materialSourceLongitude
+    - materialSourceAltitude
+    - materialSourceCoordUncertainty
+    - materialSourceDesc
+    class_uri: faceplant:BiologicalMaterial
+  Environment:
+    name: Environment
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Environment
+    description: 'Environmental parameters that were kept constant throughout the
+      study and did not change between observation units or assays.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - environmentParameters
+    class_uri: faceplant:Environment
+  EnvironmentParameter:
+    name: EnvironmentParameter
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-EnvironmentParameter
+    description: A constant environmental parameter and its value.
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - envParam
+    - envParamValue
+    class_uri: faceplant:EnvironmentParameter
+  ExperimentalFactor:
+    name: ExperimentalFactor
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-ExperimentalFactor
+    description: 'A condition that varies between observation units and whose impact
+      on the biological material is the object of a study.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - expeFactorType
+    - expeFactorDesc
+    - expeFactorValues
+    class_uri: faceplant:ExperimentalFactor
+  Event:
+    name: Event
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Event
+    description: 'A discrete occurrence at a particular time in the experiment, natural
+      or unnatural, such as planting, rain, fertilizing, or watering.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - eventType
+    - eventAccNumber
+    - eventDesc
+    - eventDate
+    class_uri: faceplant:Event
+  ObservationUnit:
+    name: ObservationUnit
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-ObservationUnit
+    description: 'Objects that are subject to instances of observation and measurement.
+      Observation units may comprise plants, their environment, or pure environmental
+      observation units.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - obsUnitId
+    - obsUnitType
+    - ObservationUnit_externalId
+    - spatialDistribution
+    - obsUnitFactorValue
+    - biologicalMaterialRefs
+    - events
+    - samples
+    slot_usage:
+      externalId:
+        name: externalId
+        annotations:
+          miappe_label:
+            tag: miappe_label
+            value: Observation unit external ID
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 0+
+        description: 'Identifier for the observation unit in a persistent repository,
+          comprising the repository name and observation unit identifier.
+
+          '
+    class_uri: faceplant:ObservationUnit
+  Sample:
+    name: Sample
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-Sample
+    description: 'A portion of plant tissue harvested, non-harvested, or extracted
+      from an observation unit for sub-plant observations and/or molecular studies.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - sampleId
+    - developmentStage
+    - anatomicalEntity
+    - sampleDesc
+    - collectionDate
+    - Sample_externalId
+    slot_usage:
+      externalId:
+        name: externalId
+        annotations:
+          miappe_label:
+            tag: miappe_label
+            value: Sample external ID
+          miappe_cardinality:
+            tag: miappe_cardinality
+            value: 0+
+        description: 'Identifier for the sample in a persistent repository, comprising
+          the repository name and sample accession number.
+
+          '
+    class_uri: faceplant:Sample
+  ObservedVariable:
+    name: ObservedVariable
+    definition_uri: https://github.com/Firstnamehannah/FacePlant-ObservedVariable
+    description: 'Description of how a measurement has been made, usually a trait
+      associated with a method and a unit or scale of measurement.
+
+      '
+    from_schema: https://w3id.org/your-org/faceplant
+    slots:
+    - variableId
+    - variableName
+    - variableAccNumber
+    - traitName
+    - traitEntity
+    - traitEntityAccessionNumber
+    - traitCharacteristic
+    - traitCharacteristicAccessionNumber
+    - traitAccNumber
+    - methodName
+    - methodAccNumber
+    - methodDesc
+    - methodRef
+    - scaleName
+    - scaleAccNumber
+    - timeScale
+    class_uri: faceplant:ObservedVariable
+metamodel_version: 1.11.0
+source_file: faceplant.yaml
+source_file_date: '2026-09-01T04:31:42'
+source_file_size: 39703
+generation_date: '2026-09-01T04:31:53'
+
