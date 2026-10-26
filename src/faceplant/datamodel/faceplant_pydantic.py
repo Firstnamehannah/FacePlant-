@@ -30,7 +30,7 @@ from pydantic import (
 
 
 metamodel_version = "1.11.0"
-version = "0.1.0"
+version = "0.2.0"
 
 
 class ConfiguredBaseModel(BaseModel):
@@ -66,1010 +66,360 @@ class LinkMLMeta(RootModel):
         return key in self.root
 
 
-linkml_meta = LinkMLMeta({'annotations': {'source': {'tag': 'source',
-                                'value': 'Derived from the MIAPPE LinkML schema '
-                                         '(https://github.com/lakehouse-code/datamodel/blob/main/miappe.yaml), '
-                                         'itself generated from '
-                                         'MIAPPE_Checklist_Data_Model.tsv in the '
-                                         'MIAPPE/MIAPPE GitHub repository.'},
-                     'source_version': {'tag': 'source_version',
-                                        'value': 'MIAPPE 1.2'}},
-     'default_prefix': 'faceplant',
+linkml_meta = LinkMLMeta({'default_prefix': 'faceplant',
      'default_range': 'string',
-     'description': 'A LinkML data model for plant phenotypic data, based on the '
-                    'Minimum Information About a Plant Phenotyping Experiment '
-                    '(MIAPPE v1.2) checklist. Slot names follow the original '
-                    'MIAPPE codenames for traceability.\n',
+     'description': 'A LinkML data model for data recorded by the APPL automated '
+                    'plant phenotyping platform: fluorescence, thermal, moisture, '
+                    'RGB, 3D, and hyperspectral camera readings, plus '
+                    'watering-scale and spray-treatment logs, organized as '
+                    'Experiment > Tray > Plant > PhenotypingImagingRound.',
      'id': 'https://w3id.org/your-org/faceplant',
      'imports': ['linkml:types'],
      'license': 'https://creativecommons.org/licenses/by/4.0/',
      'name': 'faceplant',
-     'prefixes': {'CO': {'prefix_prefix': 'CO',
-                         'prefix_reference': 'http://purl.obolibrary.org/obo/CO_'},
-                  'CO_322': {'prefix_prefix': 'CO_322',
-                             'prefix_reference': 'https://cropontology.org/rdf/CO_322:'},
-                  'CO_715': {'prefix_prefix': 'CO_715',
-                             'prefix_reference': 'http://purl.obolibrary.org/obo/CO_715_'},
-                  'DOI': {'prefix_prefix': 'DOI',
-                          'prefix_reference': 'http://identifiers.org/doi/'},
-                  'EO': {'prefix_prefix': 'EO',
-                         'prefix_reference': 'http://purl.obolibrary.org/obo/EO_'},
-                  'NCBITaxon': {'prefix_prefix': 'NCBITaxon',
-                                'prefix_reference': 'http://purl.obolibrary.org/obo/NCBITaxon_'},
-                  'ORCID': {'prefix_prefix': 'ORCID',
-                            'prefix_reference': 'http://identifiers.org/orcid/'},
-                  'PATO': {'prefix_prefix': 'PATO',
-                           'prefix_reference': 'http://purl.obolibrary.org/obo/PATO_'},
-                  'PO': {'prefix_prefix': 'PO',
-                         'prefix_reference': 'http://purl.obolibrary.org/obo/PO_'},
-                  'TO': {'prefix_prefix': 'TO',
-                         'prefix_reference': 'http://purl.obolibrary.org/obo/TO_'},
-                  'faceplant': {'prefix_prefix': 'faceplant',
+     'prefixes': {'faceplant': {'prefix_prefix': 'faceplant',
                                 'prefix_reference': 'https://github.com/Firstnamehannah/FacePlant-'},
                   'linkml': {'prefix_prefix': 'linkml',
-                             'prefix_reference': 'https://w3id.org/linkml/'},
-                  'miappe': {'prefix_prefix': 'miappe',
-                             'prefix_reference': 'https://w3id.org/miappe/'},
-                  'schema': {'prefix_prefix': 'schema',
-                             'prefix_reference': 'http://schema.org/'}},
+                             'prefix_reference': 'https://w3id.org/linkml/'}},
      'source_file': 'src/faceplant/schema/faceplant.yaml',
-     'title': 'FacePlant: a plant phenotypic data model',
-     'types': {'iso8601DateTime': {'description': 'ISO 8601 date or date-time, '
-                                                  'with optional timezone.',
-                                   'from_schema': 'https://w3id.org/your-org/faceplant',
-                                   'name': 'iso8601DateTime',
-                                   'pattern': '^\\d{4}-\\d{2}-\\d{2}([Tt '
-                                              '][0-9:.+-]+(Z|[+-][0-9]{2}:[0-9]{2})?)?$',
-                                   'typeof': 'string'},
-               'keyValueList': {'description': 'Key-value pair list encoded as '
-                                               'text, usually separated by commas '
-                                               'or semicolons.',
-                                'from_schema': 'https://w3id.org/your-org/faceplant',
-                                'name': 'keyValueList',
-                                'typeof': 'string'},
-               'measurementWithUnit': {'description': 'Numeric value followed by a '
-                                                      'unit abbreviation, as used '
-                                                      'in the MIAPPE checklist.',
-                                       'from_schema': 'https://w3id.org/your-org/faceplant',
-                                       'name': 'measurementWithUnit',
-                                       'typeof': 'string'}}} )
+     'title': 'FacePlant: an APPL automated plant phenotyping data model'} )
 
-
-class MIAPPESubmission(ConfiguredBaseModel):
+class FluorescencePhase(str, Enum):
     """
-    A complete MIAPPE submission containing exactly one investigation.
+    Which part of the light/dark induction protocol a reading came from.
+    """
+    L1 = "L1"
+    """
+    Light step 1
+    """
+    L2 = "L2"
+    """
+    Light step 2
+    """
+    L3 = "L3"
+    """
+    Light step 3
+    """
+    L4 = "L4"
+    """
+    Light step 4
+    """
+    Lss = "Lss"
+    """
+    Light steady-state
+    """
+    D1 = "D1"
+    """
+    Dark recovery step 1
+    """
+    D2 = "D2"
+    """
+    Dark recovery step 2
+    """
+    D3 = "D3"
+    """
+    Dark recovery step 3
+    """
+    Dss = "Dss"
+    """
+    Dark steady-state
+    """
+
+
+
+class FacePlantSubmission(ConfiguredBaseModel):
+    """
+    Root container for one or more APPL phenotyping experiments.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant', 'tree_root': True})
 
-    investigation: Investigation = Field(default=..., description="""The single investigation represented by a MIAPPE submission.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MIAPPESubmission']} })
+    experiments: Optional[list[Experiment]] = Field(default=None, description="""Experiments in this submission.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FacePlantSubmission']} })
 
 
-class Investigation(ConfiguredBaseModel):
+class Experiment(ConfiguredBaseModel):
     """
-    Investigations are research programmes with defined aims. They can exist at various scales, including a grant-funded programme, a publication, or a single experiment.
-
+    A single automated phenotyping study/trial run on the APPL platform.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant',
-         'slot_usage': {'persons': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                           'value': '1+ '
-                                                                                    'per '
-                                                                                    'investigation'}},
-                                    'name': 'persons',
-                                    'required': True},
-                        'studies': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                           'value': '1+ '
-                                                                                    'per '
-                                                                                    'investigation'}},
-                                    'name': 'studies',
+         'slot_usage': {'experimentId': {'identifier': True,
+                                         'name': 'experimentId',
+                                         'required': True},
+                        'trays': {'name': 'trays', 'required': True}}})
+
+    experimentId: str = Field(default=..., description="""Unique identifier for the experiment.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Experiment']} })
+    studyName: Optional[str] = Field(default=None, description="""Name/type of the study, e.g. 'GWAS'.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Experiment']} })
+    trays: list[Tray] = Field(default=..., description="""Trays belonging to an experiment.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Experiment']} })
+
+
+class Tray(ConfiguredBaseModel):
+    """
+    A physical tray/carrier holding one or more plants.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant',
+         'slot_usage': {'plants': {'name': 'plants', 'required': True},
+                        'trayId': {'identifier': True,
+                                   'name': 'trayId',
+                                   'required': True}}})
+
+    trayId: str = Field(default=..., description="""Unique identifier for the tray.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tray']} })
+    trayInfo: Optional[str] = Field(default=None, description="""Block/grouping code for the tray.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tray']} })
+    plants: list[Plant] = Field(default=..., description="""Plants held in a tray.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tray']} })
+
+
+class Plant(ConfiguredBaseModel):
+    """
+    A single plant tracked through the experiment.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant',
+         'slot_usage': {'plantId': {'identifier': True,
+                                    'name': 'plantId',
                                     'required': True}}})
 
-    investigationId: Optional[str] = Field(default=None, description="""Identifier comprising the unique name of the institution/database hosting the submission and the accession number of the investigation there.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Investigation unique ID'}},
-         'domain_of': ['Investigation']} })
-    investigationTitle: str = Field(default=..., description="""Human-readable string summarising the investigation.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Investigation title'}},
-         'domain_of': ['Investigation']} })
-    investigationDescription: Optional[str] = Field(default=None, description="""Human-readable text describing the investigation in more detail.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Investigation description'}},
-         'domain_of': ['Investigation']} })
-    submissionDate: Optional[str] = Field(default=None, description="""Date of submission of the dataset being described to a host repository.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Date/Time (ISO 8601, optional '
-                                                    'time zone)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Submission date'}},
-         'domain_of': ['Investigation']} })
-    publicReleaseDate: Optional[str] = Field(default=None, description="""Date of first public release of the dataset being described.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Date/Time (ISO 8601, optional '
-                                                    'time zone)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Public release date'}},
-         'domain_of': ['Investigation']} })
-    license: Optional[str] = Field(default=None, description="""License for reuse of the data associated with this investigation.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'License'}},
-         'domain_of': ['Investigation']} })
-    miappeVersion: str = Field(default=..., description="""The version of MIAPPE used.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Version number'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'MIAPPE version'}},
-         'domain_of': ['Investigation']} })
-    associatedPublication: Optional[list[str]] = Field(default=None, description="""Identifier for a literature publication where the investigation is described.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_format': {'tag': 'miappe_format', 'value': 'DOI'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Associated publication'}},
-         'domain_of': ['Investigation']} })
-    persons: list[Person] = Field(default=..., description="""People associated with an investigation or study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+ per investigation'}},
-         'domain_of': ['Investigation', 'Study']} })
-    studies: list[Study] = Field(default=..., description="""Studies belonging to an investigation.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+ per investigation'}},
-         'domain_of': ['Investigation']} })
+    plantId: str = Field(default=..., description="""Unique plant identifier (e.g. composite of sow date, project code, and replicate number).""", json_schema_extra = { "linkml_meta": {'domain_of': ['Plant']} })
+    genotype: Optional[str] = Field(default=None, description="""Accession/clone/genotype code for the plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Plant']} })
+    position: Optional[str] = Field(default=None, description="""Position label within the tray/imaging cassette.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Plant']} })
+    imagingRounds: Optional[list[PhenotypingImagingRound]] = Field(default=None, description="""APPL automated phenotyping snapshots recorded for this plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Plant']} })
 
 
-class Study(ConfiguredBaseModel):
+class PhenotypingImagingRound(ConfiguredBaseModel):
     """
-    A study or experiment comprises a series of assays or measurements of one or more types, undertaken to answer a particular biological question.
-
+    One full automated phenotyping snapshot of a single plant on a given date, across every connected sensor. Corresponds to one row of the APPL platform's raw export.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant',
-         'slot_usage': {'biologicalMaterials': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                                       'value': '1+ '
-                                                                                                'per '
-                                                                                                'study'}},
-                                                'name': 'biologicalMaterials',
-                                                'required': True},
-                        'observationUnits': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                                    'value': '1+ '
-                                                                                             'per '
-                                                                                             'study'}},
-                                             'name': 'observationUnits',
-                                             'required': True},
-                        'observedVariables': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                                     'value': '1+ '
-                                                                                              'per '
-                                                                                              'study'}},
-                                              'name': 'observedVariables',
-                                              'required': True},
-                        'persons': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                           'value': '0+ '
-                                                                                    'per '
-                                                                                    'study'}},
-                                    'name': 'persons',
-                                    'required': False}}})
+         'slot_usage': {'roundDate': {'name': 'roundDate', 'required': True}}})
 
-    studyId: Optional[str] = Field(default=None, description="""Unique identifier comprising the name or identifier for the institution or database hosting the study data and the identifier of the study there.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Study unique ID'}},
-         'domain_of': ['Study']} })
-    studyTitle: str = Field(default=..., description="""Human-readable name summarising the study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Study title'}},
-         'domain_of': ['Study']} })
-    studyDescription: Optional[str] = Field(default=None, description="""Human-readable text describing the study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Study description'}},
-         'domain_of': ['Study']} })
-    studyStartDate: str = Field(default=..., description="""Date and, if relevant, time when the experiment started.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Date/Time (ISO 8601, optional '
-                                                    'time zone)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Start date of study'}},
-         'domain_of': ['Study']} })
-    studyEndDate: Optional[str] = Field(default=None, description="""Date and, if relevant, time when the experiment ended.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Date/Time (ISO 8601, optional '
-                                                    'time zone)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'End date of study'}},
-         'domain_of': ['Study']} })
-    contactInst: str = Field(default=..., description="""Name and address of the institution responsible for the study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Contact institution'}},
-         'domain_of': ['Study']} })
-    locationCountry: str = Field(default=..., description="""Country where the experiment took place, either as a full name or preferably as a 2-letter ISO 3166 country code.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Country name or 2-letter code '
-                                                    '(ISO 3166)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Geographic location (country)'}},
-         'domain_of': ['Study']} })
-    siteName: str = Field(default=..., description="""Name of the natural site, experimental field, greenhouse, phenotyping facility, or other site where the experiment took place.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Experimental site name'}},
-         'domain_of': ['Study']} })
-    locationLatitude: Optional[Decimal] = Field(default=None, description="""Latitude of the experimental site in decimal degrees.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1 (1 if longitude is '
-                                                         'provided)'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Degrees in decimal format (ISO '
-                                                    '6709)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Geographic location (latitude)'}},
-         'domain_of': ['Study']} })
-    locationLongitude: Optional[Decimal] = Field(default=None, description="""Longitude of the experimental site in decimal degrees.""", ge=-180, le=180, json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1 (1 if latitude is '
-                                                         'provided)'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Degrees in decimal format (ISO '
-                                                    '6709)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Geographic location (longitude)'}},
-         'domain_of': ['Study']} })
-    locationAltitude: Optional[str] = Field(default=None, description="""Altitude of the experimental site, provided in metres.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Numeric + unit abbreviation'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Geographic location (altitude)'}},
-         'domain_of': ['Study']} })
-    expeDesignDesc: str = Field(default=..., description="""Short description of the experimental design, possibly including statistical design.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Description of the experimental '
-                                                   'design'}},
-         'domain_of': ['Study']} })
-    expeDesignType: Optional[str] = Field(default=None, description="""Type of experimental design of the study, preferably as a Crop Ontology accession.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Crop Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Type of experimental design'}},
-         'domain_of': ['Study']} })
-    obsUnitLevelHierarchy: Optional[str] = Field(default=None, description="""Hierarchy of the different levels of repetition.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Formatted text (level>level)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Observation unit level hierarchy'}},
-         'domain_of': ['Study']} })
-    obsUnitDesc: str = Field(default=..., description="""General description of the observation units in the study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Observation unit description'}},
-         'domain_of': ['Study']} })
-    growthFacilityDesc: str = Field(default=..., description="""Short description of the facility in which the study was carried out.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Description of growth facility'}},
-         'domain_of': ['Study']} })
-    growthFacilityType: Optional[str] = Field(default=None, description="""Type of growth facility, preferably as a Crop Ontology accession.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Crop Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Type of growth facility'}},
-         'domain_of': ['Study']} })
-    culturalPractice: Optional[str] = Field(default=None, description="""General description of the cultural practices of the study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Cultural practices'}},
-         'domain_of': ['Study']} })
-    expeDesignMap: Optional[list[str]] = Field(default=None, description="""Representation of the experimental design as a URL or file name.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'URL or file name'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Map of experimental design'}},
-         'domain_of': ['Study']} })
-    persons: Optional[list[Person]] = Field(default=None, description="""People associated with an investigation or study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+ per study'}},
-         'domain_of': ['Investigation', 'Study']} })
-    dataFiles: Optional[list[DataFile]] = Field(default=None, description="""Data files associated with a study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+ per study'}},
-         'domain_of': ['Study']} })
-    biologicalMaterials: list[BiologicalMaterial] = Field(default=..., description="""Biological materials associated with a study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+ per study'}},
-         'domain_of': ['Study']} })
-    environment: Optional[Environment] = Field(default=None, description="""Constant environmental parameters for a study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1 per study'}},
-         'domain_of': ['Study']} })
-    experimentalFactors: Optional[list[ExperimentalFactor]] = Field(default=None, description="""Experimental factors associated with a study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+ per study'}},
-         'domain_of': ['Study']} })
-    events: Optional[list[Event]] = Field(default=None, description="""Events associated with a study or observation unit.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+ per study or observation '
-                                                         'unit'}},
-         'domain_of': ['Study', 'ObservationUnit']} })
-    observationUnits: list[ObservationUnit] = Field(default=..., description="""Observation units associated with a study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+ per study'}},
-         'domain_of': ['Study']} })
-    observedVariables: list[ObservedVariable] = Field(default=..., description="""Observed variables associated with a study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+ per study'}},
-         'domain_of': ['Study']} })
+    roundDate: date = Field(default=..., description="""Date of this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    roundTime: Optional[datetime ] = Field(default=None, description="""Timestamp of this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    roundOrder: Optional[int] = Field(default=None, description="""Sequence number of this round within the experiment.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    imagingAngle: Optional[float] = Field(default=None, description="""Camera/turntable angle for this shot.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    fluorescenceFc1: Optional[FluorescenceProtocol] = Field(default=None, description="""Full induction-kinetics fluorescence reading from the primary fluorescence camera (e.g. APPL's FC1).""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    fluorescenceFc2: Optional[FluorescenceSnapshot] = Field(default=None, description="""Basic-snapshot fluorescence reading from a second fluorescence camera/angle (e.g. APPL's FC2).""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    thermal: Optional[ThermalMeasurement] = Field(default=None, description="""Infrared/thermal camera readings for this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    moisture: Optional[MoistureMeasurement] = Field(default=None, description="""Moisture-sensing camera readings for this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    rgbReadings: Optional[list[RgbMeasurement]] = Field(default=None, description="""Visible-light camera readings for this imaging round (one per camera/angle).""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    structure3d: Optional[StructureMeasurement] = Field(default=None, description="""3D/stereo scanner readings for this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    swir: Optional[SwirMeasurement] = Field(default=None, description="""Short-wave infrared hyperspectral camera readings for this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    vnir: Optional[VnirMeasurement] = Field(default=None, description="""Visible + near-infrared hyperspectral camera readings for this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    scaleReadings: Optional[list[ScaleReading]] = Field(default=None, description="""Watering-station scale readings taken during this imaging round.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
+    sprayEvent: Optional[SprayEvent] = Field(default=None, description="""Foliar treatment/spray applied during this imaging round, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhenotypingImagingRound']} })
 
 
-class Person(ConfiguredBaseModel):
+class PixelStatistic(ConfiguredBaseModel):
     """
-    A human involved in the investigation or specifically in one of its studies.
+    A single derived measurement summarized across every pixel of the segmented plant in one image (an average plus distribution stats).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
 
-    personName: str = Field(default=..., description="""The person's name, either full name or as used in scientific publications.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format', 'value': 'Name'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Person name'}},
-         'domain_of': ['Person']} })
-    personEmail: Optional[str] = Field(default=None, description="""The electronic mail address of the person.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'email address'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Person email'}},
-         'domain_of': ['Person']} })
-    personId: Optional[str] = Field(default=None, description="""Identifier for the data submitter or person. ORCID identifiers are recommended.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Person ID'}},
-         'domain_of': ['Person']} })
-    personRole: list[str] = Field(default=..., description="""Type of contribution of the person to the investigation.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Person role'}},
-         'domain_of': ['Person']} })
-    personAffiliation: list[str] = Field(default=..., description="""The institution the person belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Person affiliation'}},
-         'domain_of': ['Person']} })
-
-    @field_validator('personEmail')
-    def pattern_personEmail(cls, v):
-        pattern=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-        if isinstance(v, list):
-            for element in v:
-                if isinstance(element, str) and not pattern.match(element):
-                    err_msg = f"Invalid personEmail format: {element}"
-                    raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
-            err_msg = f"Invalid personEmail format: {v}"
-            raise ValueError(err_msg)
-        return v
+    statAvg: Optional[float] = Field(default=None, description="""Average value across all pixels of the segmented plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PixelStatistic']} })
+    statStddev: Optional[float] = Field(default=None, description="""Standard deviation across all pixels of the segmented plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PixelStatistic']} })
+    statMedian: Optional[float] = Field(default=None, description="""Median value across all pixels of the segmented plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PixelStatistic']} })
+    statMin: Optional[float] = Field(default=None, description="""Minimum value across all pixels of the segmented plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PixelStatistic']} })
+    statMax: Optional[float] = Field(default=None, description="""Maximum value across all pixels of the segmented plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PixelStatistic']} })
 
 
-class DataFile(ConfiguredBaseModel):
+class ColorBin(ConfiguredBaseModel):
     """
-    A file or digital object holding observation data recorded during one or more assays of the study, typically in tabular form.
-
+    One of the predefined color clusters an RGB camera sorts plant pixels into, used as a leaf-color / senescence proxy.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
 
-    dataFileLink: str = Field(default=..., description="""Link to the data file or identifier of a data file submitted with the MIAPPE submission.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'URL or file name'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Data file link'}},
-         'domain_of': ['DataFile']} })
-    dataFileDesc: str = Field(default=..., description="""Description of the data file format.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Data file description'}},
-         'domain_of': ['DataFile']} })
-    dataFileVersion: Optional[str] = Field(default=None, description="""Version of the dataset or actual data.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Software version number'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Data file version'}},
-         'domain_of': ['DataFile']} })
+    colorBinReference: Optional[str] = Field(default=None, description="""Reference color for this bin, e.g. '90,98,58'.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ColorBin']} })
+    colorBinValue: Optional[float] = Field(default=None, description="""Pixel count or proportion of the plant in this color bin.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ColorBin']} })
 
 
-class BiologicalMaterial(ConfiguredBaseModel):
+class FluorescenceKineticsStep(ConfiguredBaseModel):
     """
-    The biological material being studied, such as plants grown from a seed bag or plants grown in a particular field.
-
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
-
-    biologicalMaterialId: str = Field(default=..., description="""Code used to identify the biological material in the data file. It should be unique within the investigation.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Biological material ID'}},
-         'domain_of': ['BiologicalMaterial']} })
-    biologicalMaterialExtId: Optional[list[str]] = Field(default=None, description="""One or more external identifiers for the biological material.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Semicolon-separated list of '
-                                                    'unique identifiers'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Biological material external ID'}},
-         'domain_of': ['BiologicalMaterial']} })
-    organism: str = Field(default=..., description="""Identifier for the organism at species level. NCBI Taxon ID is recommended.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Organism'}},
-         'domain_of': ['BiologicalMaterial']} })
-    genus: Optional[str] = Field(default=None, description="""Genus name for the organism under study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Genus name'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Genus'}},
-         'domain_of': ['BiologicalMaterial']} })
-    species: Optional[str] = Field(default=None, description="""Species name or specific epithet for the organism under study.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Species name'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Species'}},
-         'domain_of': ['BiologicalMaterial']} })
-    infraspecificName: Optional[str] = Field(default=None, description="""Name of any subtaxa level, including variety, crossing name, cultivar, or line.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Key-value pair list or '
-                                                    'MCPD-compliant format'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Infraspecific name'}},
-         'domain_of': ['BiologicalMaterial']} })
-    biologicalMaterialLatitude: Optional[Decimal] = Field(default=None, description="""Latitude of the studied biological material.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1 (1 if longitude is '
-                                                         'provided)'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Degrees in decimal format (ISO '
-                                                    '6709)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Biological material latitude'}},
-         'domain_of': ['BiologicalMaterial']} })
-    biologicalMaterialLongitude: Optional[Decimal] = Field(default=None, description="""Longitude of the studied biological material.""", ge=-180, le=180, json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1 (1 if latitude is '
-                                                         'provided)'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Degrees in decimal format (ISO '
-                                                    '6709)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Biological material longitude'}},
-         'domain_of': ['BiologicalMaterial']} })
-    biologicalMaterialAltitude: Optional[str] = Field(default=None, description="""Altitude of the studied biological material, provided in meters.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Numeric + unit abbreviation'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Biological material altitude'}},
-         'domain_of': ['BiologicalMaterial']} })
-    biologicalMaterialCoordUncertainty: Optional[str] = Field(default=None, description="""Circular uncertainty of the coordinates, preferably provided in meters.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format', 'value': 'Numeric'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Biological material coordinates '
-                                                   'uncertainty'}},
-         'domain_of': ['BiologicalMaterial']} })
-    biologicalMaterialPreprocessing: Optional[list[str]] = Field(default=None, description="""Description of any process or treatment applied uniformly to the biological material before the study itself.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Plant Environment Ontology and/or '
-                                                    'free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Biological material '
-                                                   'preprocessing'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceId: Optional[str] = Field(default=None, description="""Identifier for the source of the biological material, commonly called germplasm, accession, genotype, or variety.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source ID (Holding '
-                                                   'institute/stock centre, '
-                                                   'accession)'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceDoi: Optional[str] = Field(default=None, description="""Digital Object Identifier of the material source.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format', 'value': 'DOI'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source DOI'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceAccNumber: Optional[str] = Field(default=None, description="""Unique identifier for accessions within a genebank or laboratory.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source accession number'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceAccName: Optional[str] = Field(default=None, description="""Genebank accession registered name, other designation, or variety name.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source accession name'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceInstCode: Optional[str] = Field(default=None, description="""FAO WIEWS code of the institute where the accession is maintained.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source institute code'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceInstName: Optional[str] = Field(default=None, description="""Name of the material source institute.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Institute name'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source institute name'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceOtherIds: Optional[str] = Field(default=None, description="""Other identifiers known to exist in other collections for this material source.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Key:Value pairs'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source other '
-                                                   'identifiers'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceLatitude: Optional[Decimal] = Field(default=None, description="""Latitude of the material source.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1 (1 if longitude is '
-                                                         'provided)'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Degrees in decimal format (ISO '
-                                                    '6709)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source latitude'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceLongitude: Optional[Decimal] = Field(default=None, description="""Longitude of the material source.""", ge=-180, le=180, json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1 (1 if latitude is '
-                                                         'provided)'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Degrees in decimal format (ISO '
-                                                    '6709)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source longitude'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceAltitude: Optional[str] = Field(default=None, description="""Altitude of the material source, provided in metres.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Numeric + unit abbreviation'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source altitude'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceCoordUncertainty: Optional[str] = Field(default=None, description="""Circular uncertainty of the coordinates, provided in meters.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Numeric + unit abbreviation'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source coordinates '
-                                                   'uncertainty'}},
-         'domain_of': ['BiologicalMaterial']} })
-    materialSourceDesc: Optional[str] = Field(default=None, description="""Description of the material source.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Material source description'}},
-         'domain_of': ['BiologicalMaterial']} })
-
-
-class Environment(ConfiguredBaseModel):
-    """
-    Environmental parameters that were kept constant throughout the study and did not change between observation units or assays.
-
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
-
-    environmentParameters: list[EnvironmentParameter] = Field(default=..., description="""Constant environmental parameter values for a study.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Environment']} })
-
-
-class EnvironmentParameter(ConfiguredBaseModel):
-    """
-    A constant environmental parameter and its value.
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
-
-    envParam: str = Field(default=..., description="""Name of an environment parameter constant within the experiment.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Environment parameter'}},
-         'domain_of': ['EnvironmentParameter']} })
-    envParamValue: str = Field(default=..., description="""Value of the environment parameter constant within the experiment.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1 per parameter'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Environment parameter value'}},
-         'domain_of': ['EnvironmentParameter']} })
-
-
-class ExperimentalFactor(ConfiguredBaseModel):
-    """
-    A condition that varies between observation units and whose impact on the biological material is the object of a study.
-
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
-
-    expeFactorType: str = Field(default=..., description="""Name or acronym of the experimental factor.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Experimental Factor type'}},
-         'domain_of': ['ExperimentalFactor']} })
-    expeFactorDesc: Optional[str] = Field(default=None, description="""Free text description of the experimental factor, including relevant treatment planning and protocol details.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Experimental Factor description'}},
-         'domain_of': ['ExperimentalFactor']} })
-    expeFactorValues: list[str] = Field(default=..., description="""List of possible values for the experimental factor.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '2+ per factor'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Experimental Factor values'}},
-         'domain_of': ['ExperimentalFactor']} })
-
-
-class Event(ConfiguredBaseModel):
-    """
-    A discrete occurrence at a particular time in the experiment, natural or unnatural, such as planting, rain, fertilizing, or watering.
-
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
-
-    eventType: str = Field(default=..., description="""Short name of the event.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text (short)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Event type'}},
-         'domain_of': ['Event']} })
-    eventAccNumber: Optional[str] = Field(default=None, description="""Accession number of the event type in a suitable controlled vocabulary.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Crop Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Event accession number'}},
-         'domain_of': ['Event']} })
-    eventDesc: Optional[str] = Field(default=None, description="""Description of the event, including amount applied and possibly duration.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Event description'}},
-         'domain_of': ['Event']} })
-    eventDate: list[str] = Field(default=..., description="""Date and time of the event.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Date/Time (ISO 8601, optional '
-                                                    'time zone)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Event date'}},
-         'domain_of': ['Event']} })
-
-
-class ObservationUnit(ConfiguredBaseModel):
-    """
-    Objects that are subject to instances of observation and measurement. Observation units may comprise plants, their environment, or pure environmental observation units.
-
+    One timepoint in a light/dark chlorophyll-fluorescence induction protocol (e.g. light steps L1-L4/steady-state, dark recovery steps D1-D3/steady-state).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant',
-         'slot_usage': {'externalId': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                              'value': '0+'},
-                                                       'miappe_label': {'tag': 'miappe_label',
-                                                                        'value': 'Observation '
-                                                                                 'unit '
-                                                                                 'external '
-                                                                                 'ID'}},
-                                       'description': 'Identifier for the observation '
-                                                      'unit in a persistent '
-                                                      'repository, comprising the '
-                                                      'repository name and observation '
-                                                      'unit identifier.\n',
-                                       'name': 'externalId'}}})
+         'slot_usage': {'fluorescencePhase': {'name': 'fluorescencePhase',
+                                              'required': True}}})
 
-    obsUnitId: str = Field(default=..., description="""Identifier used to identify the observation unit in data files containing values observed or measured on that unit.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Observation unit ID'}},
-         'domain_of': ['ObservationUnit']} })
-    obsUnitType: str = Field(default=..., description="""Type of observation unit in textual form, usually study, block, sub-block, plot, sub-plot, pot, or plant.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Observation unit type'}},
-         'domain_of': ['ObservationUnit']} })
-    externalId: Optional[list[str]] = Field(default=None, description="""Identifier for the observation unit in a persistent repository, comprising the repository name and observation unit identifier.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Observation unit external ID'}},
-         'domain_of': ['ObservationUnit', 'Sample']} })
-    spatialDistribution: Optional[list[str]] = Field(default=None, description="""Type and value of a spatial coordinate or level of observation as a key-value pair.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Formatted text (Key:value)'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Spatial distribution'}},
-         'domain_of': ['ObservationUnit']} })
-    obsUnitFactorValue: Optional[list[str]] = Field(default=None, description="""List of values for each factor applied to the observation unit.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Observation Unit factor value'}},
-         'domain_of': ['ObservationUnit']} })
-    biologicalMaterialRefs: Optional[list[str]] = Field(default=None, description="""References from an observation unit to biological material identifiers defined in the study-level biologicalMaterials list.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+ per observation unit'}},
-         'domain_of': ['ObservationUnit']} })
-    events: Optional[list[Event]] = Field(default=None, description="""Events associated with a study or observation unit.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+ per study or observation '
-                                                         'unit'}},
-         'domain_of': ['Study', 'ObservationUnit']} })
-    samples: Optional[list[Sample]] = Field(default=None, description="""Samples associated with an observation unit.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+ per observation unit'}},
-         'domain_of': ['ObservationUnit']} })
+    fluorescencePhase: FluorescencePhase = Field(default=..., description="""Which step of the induction protocol this reading is from.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    ft: Optional[float] = Field(default=None, description="""Instantaneous fluorescence at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    fm: Optional[float] = Field(default=None, description="""Maximum fluorescence at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    fo: Optional[float] = Field(default=None, description="""Minimum fluorescence at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    fv: Optional[float] = Field(default=None, description="""Variable fluorescence (Fm - Fo) at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    fq: Optional[float] = Field(default=None, description="""Fluorescence quenched by light at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    fvOverFm: Optional[float] = Field(default=None, description="""Quantum yield of PSII at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    qy: Optional[float] = Field(default=None, description="""Operating quantum yield at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    npq: Optional[float] = Field(default=None, description="""Non-photochemical quenching at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    qN: Optional[float] = Field(default=None, description="""Non-photochemical quenching coefficient at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    qP: Optional[float] = Field(default=None, description="""Photochemical quenching coefficient at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    qL: Optional[float] = Field(default=None, description="""Lake-model photochemical quenching coefficient at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
+    rfd: Optional[float] = Field(default=None, description="""Fluorescence decrease ratio (vitality index) at this step.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceKineticsStep']} })
 
 
-class Sample(ConfiguredBaseModel):
+class FluorescenceSnapshot(ConfiguredBaseModel):
     """
-    A portion of plant tissue harvested, non-harvested, or extracted from an observation unit for sub-plant observations and/or molecular studies.
-
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant',
-         'slot_usage': {'externalId': {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                                              'value': '0+'},
-                                                       'miappe_label': {'tag': 'miappe_label',
-                                                                        'value': 'Sample '
-                                                                                 'external '
-                                                                                 'ID'}},
-                                       'description': 'Identifier for the sample in a '
-                                                      'persistent repository, '
-                                                      'comprising the repository name '
-                                                      'and sample accession number.\n',
-                                       'name': 'externalId'}}})
-
-    sampleId: str = Field(default=..., description="""Unique identifier for the sample.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Sample ID'}},
-         'domain_of': ['Sample']} })
-    developmentStage: Optional[str] = Field(default=None, description="""Stage in the life of a plant structure during which the sample was taken, preferably as a Plant Ontology or BBCH accession.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Plant Ontology term or BBCH scale '
-                                                    'term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Plant structure development '
-                                                   'stage'}},
-         'domain_of': ['Sample']} })
-    anatomicalEntity: str = Field(default=..., description="""Plant part or product from which the sample was taken, preferably as a Plant Ontology accession.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Plant Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Plant anatomical entity'}},
-         'domain_of': ['Sample']} })
-    sampleDesc: Optional[str] = Field(default=None, description="""Information not captured by other sample fields, including quantification, sample treatments, and processing.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Sample description'}},
-         'domain_of': ['Sample']} })
-    collectionDate: str = Field(default=..., description="""Date and time when the sample was collected or harvested.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Date/Time'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Collection date'}},
-         'domain_of': ['Sample']} })
-    externalId: Optional[list[str]] = Field(default=None, description="""Identifier for the sample in a persistent repository, comprising the repository name and sample accession number.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Sample external ID'}},
-         'domain_of': ['ObservationUnit', 'Sample']} })
-
-
-class ObservedVariable(ConfiguredBaseModel):
-    """
-    Description of how a measurement has been made, usually a trait associated with a method and a unit or scale of measurement.
-
+    Basic single-shot chlorophyll-fluorescence reading.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
 
-    variableId: str = Field(default=..., description="""Code used to identify the variable in the data file. It must be unique within a given investigation.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Variable ID'}},
-         'domain_of': ['ObservedVariable']} })
-    variableName: Optional[str] = Field(default=None, description="""Name of the variable.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Variable name'}},
-         'domain_of': ['ObservedVariable']} })
-    variableAccNumber: Optional[str] = Field(default=None, description="""Accession number of the variable in the Crop Ontology.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Crop Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Variable accession number'}},
-         'domain_of': ['ObservedVariable']} })
-    traitName: str = Field(default=..., description="""Name of the plant or environmental trait under observation.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Trait'}},
-         'domain_of': ['ObservedVariable']} })
-    traitEntity: Optional[str] = Field(default=None, description="""Entity on which the trait has been measured.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Trait Entity'}},
-         'domain_of': ['ObservedVariable']} })
-    traitEntityAccessionNumber: Optional[str] = Field(default=None, description="""Accession number of the trait entity in a suitable controlled vocabulary.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Trait Entity Accession number'}},
-         'domain_of': ['ObservedVariable']} })
-    traitCharacteristic: Optional[str] = Field(default=None, description="""Characteristic measured, such as size, volume, surface, or sugar concentration.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Trait Characteristic'}},
-         'domain_of': ['ObservedVariable']} })
-    traitCharacteristicAccessionNumber: Optional[str] = Field(default=None, description="""Accession number of the trait characteristic in a suitable controlled vocabulary.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Trait Characteristic Accession '
-                                                   'number'}},
-         'domain_of': ['ObservedVariable']} })
-    traitAccNumber: Optional[str] = Field(default=None, description="""Accession number of the trait in a suitable controlled vocabulary.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Trait accession number'}},
-         'domain_of': ['ObservedVariable']} })
-    methodName: str = Field(default=..., description="""Name of the method of observation.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Method'}},
-         'domain_of': ['ObservedVariable']} })
-    methodAccNumber: Optional[str] = Field(default=None, description="""Accession number of the method in a suitable controlled vocabulary.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Method accession number'}},
-         'domain_of': ['ObservedVariable']} })
-    methodDesc: Optional[str] = Field(default=None, description="""Textual description of the method, which may extend an externally defined method with specific parameters.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Method description'}},
-         'domain_of': ['ObservedVariable']} })
-    methodRef: Optional[str] = Field(default=None, description="""URI or DOI of a reference describing the method.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'URI or DOI'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Reference associated to the '
-                                                   'method'}},
-         'domain_of': ['ObservedVariable']} })
-    scaleName: str = Field(default=..., description="""Name of the scale associated with the variable.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Unique identifier'},
-                         'miappe_label': {'tag': 'miappe_label', 'value': 'Scale'}},
-         'domain_of': ['ObservedVariable']} })
-    scaleAccNumber: Optional[str] = Field(default=None, description="""Accession number of the scale in a suitable controlled vocabulary.""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0-1'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Crop Ontology term'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Scale accession number'}},
-         'domain_of': ['ObservedVariable']} })
-    timeScale: Optional[list[str]] = Field(default=None, description="""Scale or unit of time with which observations of this type were recorded in the data file, for time series studies.
-""", json_schema_extra = { "linkml_meta": {'annotations': {'miappe_cardinality': {'tag': 'miappe_cardinality',
-                                                'value': '0+'},
-                         'miappe_format': {'tag': 'miappe_format',
-                                           'value': 'Free text'},
-                         'miappe_label': {'tag': 'miappe_label',
-                                          'value': 'Time scale'}},
-         'domain_of': ['ObservedVariable']} })
+    fluorescenceCameraId: Optional[str] = Field(default=None, description="""Identifier of the fluorescence camera unit, e.g. 'FC1', 'FC2'.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    fluorescenceSize: Optional[float] = Field(default=None, description="""Segmented plant size as measured by the fluorescence camera.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    foBase: Optional[float] = Field(default=None, description="""Minimum fluorescence (dark-adapted).""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    fmBase: Optional[float] = Field(default=None, description="""Maximum fluorescence (dark-adapted).""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    fvBase: Optional[float] = Field(default=None, description="""Variable fluorescence (dark-adapted).""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    qyMax: Optional[float] = Field(default=None, description="""Fv/Fm - dark-adapted maximum quantum yield of PSII, the most commonly used fluorescence metric.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+
+
+class FluorescenceProtocol(FluorescenceSnapshot):
+    """
+    Full light/dark induction-kinetics fluorescence reading: a base snapshot plus a series of kinetics steps (what the primary fluorescence camera, e.g. APPL's FC1, reports).
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    fp: Optional[float] = Field(default=None, description="""Peak fluorescence.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceProtocol']} })
+    ftLss: Optional[float] = Field(default=None, description="""Instantaneous fluorescence at light steady-state.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceProtocol']} })
+    rfdLss: Optional[float] = Field(default=None, description="""Vitality/fluorescence-decrease index at light steady-state.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceProtocol']} })
+    kineticsSteps: Optional[list[FluorescenceKineticsStep]] = Field(default=None, description="""The full sequence of light/dark induction-kinetics steps for one fluorescence reading.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceProtocol']} })
+    fluorescenceCameraId: Optional[str] = Field(default=None, description="""Identifier of the fluorescence camera unit, e.g. 'FC1', 'FC2'.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    fluorescenceSize: Optional[float] = Field(default=None, description="""Segmented plant size as measured by the fluorescence camera.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    foBase: Optional[float] = Field(default=None, description="""Minimum fluorescence (dark-adapted).""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    fmBase: Optional[float] = Field(default=None, description="""Maximum fluorescence (dark-adapted).""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    fvBase: Optional[float] = Field(default=None, description="""Variable fluorescence (dark-adapted).""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+    qyMax: Optional[float] = Field(default=None, description="""Fv/Fm - dark-adapted maximum quantum yield of PSII, the most commonly used fluorescence metric.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FluorescenceSnapshot']} })
+
+
+class ThermalMeasurement(ConfiguredBaseModel):
+    """
+    Infrared/thermal camera output for one imaging round.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    thermalTemp: Optional[PixelStatistic] = Field(default=None, description="""Primary temperature channel, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ThermalMeasurement']} })
+    thermalTemp2: Optional[PixelStatistic] = Field(default=None, description="""Secondary temperature channel, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ThermalMeasurement']} })
+    thermalSize: Optional[PixelStatistic] = Field(default=None, description="""Segmented plant size as measured by the thermal camera.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ThermalMeasurement']} })
+
+
+class MoistureMeasurement(ConfiguredBaseModel):
+    """
+    Moisture-sensing camera output, based on reflectance at known water-absorption wavelengths (940nm, 1450nm).
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    waterContent: Optional[PixelStatistic] = Field(default=None, description="""Derived water-content index, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MoistureMeasurement']} })
+    band940nm: Optional[PixelStatistic] = Field(default=None, description="""Reflectance at 940nm (a water-absorption band), summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MoistureMeasurement']} })
+    band1450nm: Optional[PixelStatistic] = Field(default=None, description="""Reflectance at 1450nm (a water-absorption band), summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MoistureMeasurement']} })
+
+
+class SwirMeasurement(ConfiguredBaseModel):
+    """
+    Short-wave infrared hyperspectral camera output.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    swirSize: Optional[PixelStatistic] = Field(default=None, description="""Segmented plant size as measured by the SWIR camera.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SwirMeasurement']} })
+    swirWater1: Optional[PixelStatistic] = Field(default=None, description="""SWIR-derived water index, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SwirMeasurement']} })
+
+
+class VnirMeasurement(ConfiguredBaseModel):
+    """
+    Visible + near-infrared hyperspectral camera output, reduced from the full spectrum to a set of pre-computed vegetation indices.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    vnirSize: Optional[PixelStatistic] = Field(default=None, description="""Segmented plant size as measured by the VNIR camera.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+    ndvi: Optional[PixelStatistic] = Field(default=None, description="""Normalized Difference Vegetation Index (greenness/biomass), summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+    ndvi2: Optional[PixelStatistic] = Field(default=None, description="""Alternate NDVI formulation, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+    pri: Optional[PixelStatistic] = Field(default=None, description="""Photochemical Reflectance Index - tracks xanthophyll-pigment changes, an early/fast indicator of light stress. Summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+    psri: Optional[PixelStatistic] = Field(default=None, description="""Plant Senescence Reflectance Index, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+    sipi: Optional[PixelStatistic] = Field(default=None, description="""Structure-Insensitive Pigment Index (carotenoid:chlorophyll ratio), summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+    osavi: Optional[PixelStatistic] = Field(default=None, description="""Optimized Soil-Adjusted Vegetation Index, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+    mcari1: Optional[PixelStatistic] = Field(default=None, description="""Modified Chlorophyll Absorption Ratio Index, summarized across the plant's pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VnirMeasurement']} })
+
+
+class RgbMorphology(ConfiguredBaseModel):
+    """
+    Shape/size metrics from a visible-light camera.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    areaPx: Optional[float] = Field(default=None, description="""Segmented plant area, in pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    areaMm: Optional[float] = Field(default=None, description="""Segmented plant area, in square millimetres.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    perimeterPx: Optional[float] = Field(default=None, description="""Segmented plant perimeter, in pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    perimeterMm: Optional[float] = Field(default=None, description="""Segmented plant perimeter, in millimetres.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    rgbCompactness: Optional[float] = Field(default=None, description="""Shape compactness of the segmented plant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    widthMm: Optional[float] = Field(default=None, description="""Segmented plant width, in millimetres.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    heightMm: Optional[float] = Field(default=None, description="""Segmented plant height, in millimetres.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    roundness: Optional[float] = Field(default=None, description="""Roundness of the segmented plant shape.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    roundness2: Optional[float] = Field(default=None, description="""Alternate roundness formulation.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    isotropy: Optional[float] = Field(default=None, description="""Isotropy of the segmented plant shape.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    eccentricity: Optional[float] = Field(default=None, description="""Eccentricity of the segmented plant shape.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    rms: Optional[float] = Field(default=None, description="""Root-mean-square shape descriptor.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+    solidity: Optional[float] = Field(default=None, description="""Solidity (area / convex-hull area) of the segmented plant shape.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMorphology']} })
+
+
+class RgbMeasurement(ConfiguredBaseModel):
+    """
+    One RGB camera's full output (a given view/angle).
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    rgbCameraId: Optional[str] = Field(default=None, description="""Identifier of the RGB camera unit/angle, e.g. 'RGB1', 'RGB2'.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMeasurement']} })
+    morphology: Optional[RgbMorphology] = Field(default=None, description="""Shape/size metrics for one RGB reading.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMeasurement']} })
+    colorBins: Optional[list[ColorBin]] = Field(default=None, description="""The color histogram for one RGB reading.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RgbMeasurement']} })
+
+
+class StructureMeasurement(ConfiguredBaseModel):
+    """
+    3D/stereo scanner output describing plant architecture.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    structureArea: Optional[float] = Field(default=None, description="""Total leaf area from the 3D scanner.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    projectedArea: Optional[float] = Field(default=None, description="""Projected (canopy-view) area from the 3D scanner.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    leafInclination: Optional[float] = Field(default=None, description="""Average leaf inclination angle.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    leafAreaIndex: Optional[float] = Field(default=None, description="""Leaf area index (leaf area per unit ground area).""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    structureCompactness: Optional[float] = Field(default=None, description="""Compactness of the 3D plant structure.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    plantHeight: Optional[float] = Field(default=None, description="""Plant height, in millimetres.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    digitalBiomass: Optional[float] = Field(default=None, description="""Volumetric biomass proxy derived from the 3D scan.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    stemHeight: Optional[float] = Field(default=None, description="""Stem height, in millimetres.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    stemLength: Optional[float] = Field(default=None, description="""Stem length, in millimetres.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+    branchesCount: Optional[int] = Field(default=None, description="""Number of branches detected.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StructureMeasurement']} })
+
+
+class ScaleReading(ConfiguredBaseModel):
+    """
+    One load-cell weight reading from an automated watering station.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    scaleId: Optional[str] = Field(default=None, description="""Identifier of the scale/watering-station unit, e.g. 'SC1', 'SC2', 'SC3'.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ScaleReading']} })
+    weight: Optional[float] = Field(default=None, description="""Plant/pot weight before watering, in grams.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ScaleReading']} })
+    weightAfterWatering: Optional[float] = Field(default=None, description="""Plant/pot weight after watering, in grams.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ScaleReading']} })
+
+
+class SprayEvent(ConfiguredBaseModel):
+    """
+    A foliar treatment/spray applied during an imaging round.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/your-org/faceplant'})
+
+    sprayTime: Optional[datetime ] = Field(default=None, description="""Date/time the spray was applied.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SprayEvent']} })
+    sprayLiquid: Optional[str] = Field(default=None, description="""Name/type of the sprayed substance.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SprayEvent']} })
+    sprayLiquidAmount: Optional[float] = Field(default=None, description="""Amount of liquid sprayed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SprayEvent']} })
 
 
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
-MIAPPESubmission.model_rebuild()
-Investigation.model_rebuild()
-Study.model_rebuild()
-Person.model_rebuild()
-DataFile.model_rebuild()
-BiologicalMaterial.model_rebuild()
-Environment.model_rebuild()
-EnvironmentParameter.model_rebuild()
-ExperimentalFactor.model_rebuild()
-Event.model_rebuild()
-ObservationUnit.model_rebuild()
-Sample.model_rebuild()
-ObservedVariable.model_rebuild()
+FacePlantSubmission.model_rebuild()
+Experiment.model_rebuild()
+Tray.model_rebuild()
+Plant.model_rebuild()
+PhenotypingImagingRound.model_rebuild()
+PixelStatistic.model_rebuild()
+ColorBin.model_rebuild()
+FluorescenceKineticsStep.model_rebuild()
+FluorescenceSnapshot.model_rebuild()
+FluorescenceProtocol.model_rebuild()
+ThermalMeasurement.model_rebuild()
+MoistureMeasurement.model_rebuild()
+SwirMeasurement.model_rebuild()
+VnirMeasurement.model_rebuild()
+RgbMorphology.model_rebuild()
+RgbMeasurement.model_rebuild()
+StructureMeasurement.model_rebuild()
+ScaleReading.model_rebuild()
+SprayEvent.model_rebuild()
