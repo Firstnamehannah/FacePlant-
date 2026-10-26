@@ -42,7 +42,7 @@ annotations:
 
 types:
   iso8601DateTime:
-    typeof: string
+    typeof: string 
     description: ISO 8601 date or date-time, with optional timezone.
     pattern: "^\\d{4}-\\d{2}-\\d{2}([Tt ][0-9:.+-]+(Z|[+-][0-9]{2}:[0-9]{2})?)?$"
   measurementWithUnit:

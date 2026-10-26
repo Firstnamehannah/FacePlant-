@@ -11,7 +11,7 @@ investigation:
   studies:
     - studyId: STUDY001
       studyTitle: Drought stress trial 2025
-      studyStartDate: "2025-03-01T00:00:00"
+      studyStartDate: "2025-03-01T00:00:00Z"
       contactInst: University of Somewhere, Dept of Plant Science
       locationCountry: US
       siteName: Field Station A
