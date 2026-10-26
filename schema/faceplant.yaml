@@ -3037,7 +3037,7 @@ classes:
     class_uri: faceplant:ObservedVariable
 metamodel_version: 1.11.0
 source_file: faceplant.yaml
-source_file_date: '2026-10-26T18:38:00'
-source_file_size: 39703
-generation_date: '2026-10-26T18:38:08'
+source_file_date: '2026-10-26T18:44:31'
+source_file_size: 39704
+generation_date: '2026-10-26T18:44:39'
 
