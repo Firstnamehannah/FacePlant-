@@ -6,7 +6,7 @@ This is a lite version of FacePlant - a plant phenomics data model.
 
 ## Documentation Website
 
-[https://firstnamehannah.github.io/FacePlant](https://firstnamehannah.github.io/FacePlant)
+[https://firstnamehannah.github.io/FacePlant-/](https://firstnamehannah.github.io/FacePlant-/)
 
 ## Repository Structure
 
