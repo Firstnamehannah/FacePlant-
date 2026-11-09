@@ -23,6 +23,9 @@ prefixes:
   linkml:
     prefix_prefix: linkml
     prefix_reference: https://w3id.org/linkml/
+  xsd:
+    prefix_prefix: xsd
+    prefix_reference: http://www.w3.org/2001/XMLSchema#
   faceplant:
     prefix_prefix: faceplant
     prefix_reference: https://github.com/Firstnamehannah/FacePlant-
@@ -3037,7 +3040,7 @@ classes:
     class_uri: faceplant:ObservedVariable
 metamodel_version: 1.11.0
 source_file: faceplant.yaml
-source_file_date: '2026-10-26T18:44:31'
-source_file_size: 39704
-generation_date: '2026-10-26T18:44:39'
+source_file_date: '2026-11-09T13:40:47'
+source_file_size: 39847
+generation_date: '2026-11-09T13:40:53'
 
